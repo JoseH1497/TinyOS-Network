@@ -84,7 +84,11 @@ typedef struct Port{
 
 }Port;
 
+typedef struct socket_addr_t{
+      uint8_t srcPort;
+      uint8_t srcAddr;
 
+}socket_addr_t;
 
 
 
