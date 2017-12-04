@@ -102,4 +102,9 @@ implementation{
 	command t List.get(uint16_t position){
 		return container[position];
 	}
+
+	command t* List.getAddress(uint16_t position){
+		t* pointer = &container[position];
+		return pointer;
+	}
 }
