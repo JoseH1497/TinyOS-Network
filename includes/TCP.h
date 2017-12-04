@@ -5,7 +5,7 @@
 
 enum{
 
-    BUFFERSIZE = 128,
+    BUFFERSIZE = 16,
     SERVERPORT =255,
     LISTENING = 700,
     AVAILABLE = 701,
