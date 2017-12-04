@@ -206,10 +206,10 @@ def main():
 
     
         #j = 0;
-    #for j in range(1, s.numMote+1):
-            #s.routeDMP(j);
-            #s.runTime(100);
-            #print("\n")
+    for j in range(1, s.numMote+1):
+            s.routeDMP(j);
+            s.runTime(100);
+            print("\n")
 
 if __name__ == '__main__':
     main()
