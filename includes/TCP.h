@@ -20,7 +20,7 @@ enum{
     BUFFER = PACKET_MAX_PAYLOAD_SIZE - 8,
     sendServerData = 888,
     clientSentData = 999,
-    HELLO = 1001,
+    HELLO = 223,
 
 
     //Flags
