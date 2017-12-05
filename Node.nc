@@ -166,14 +166,17 @@ implementation{
 
             }else if(myMsg->protocol == HELLO){
                 int forw = -1;
+		dbg(TRANSPORT_CHANNEL,"HELLO COMMAND FROM SERVER %d\n",myMsg->src);
                 if(myMsg->dest == TOS_NODE_ID){
-                    dbg(TRANSPORT_CHANNEL,"HELLO COMMAND FROM SERVER %d\n",myMsg->src);
+                    
                     dbg(TRANSPORT_CHANNEL,"ATTEMPTING TO ESTABLISH CONNECTION TO SERVER %d\n",myMsg->src);
                     TestClient(myMsg->src, myMsg->payload);
 
                 }else{
+			
                     makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL - 1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
                     forw = shortestPath(myMsg->dest, TOS_NODE_ID);
+		    dbg(TRANSPORT_CHANNEL,"FORWARDING TO %d\n",forw);
                     call Sender.send(sendPackage, forw);
                 }
                 
