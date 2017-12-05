@@ -178,7 +178,7 @@ implementation{
 			
                     makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL - 1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
                     forw = shortestPath(myMsg->dest, TOS_NODE_ID);
-		    dbg(TRANSPORT_CHANNEL,"FORWARDING TO %d\n",forw);
+		    //dbg(TRANSPORT_CHANNEL,"FORWARDING TO %d\n",forw);
                     call Sender.send(sendPackage, forw);
                 }
                 
@@ -187,7 +187,15 @@ implementation{
 
 
             }else if(myMsg->protocol == getUSERNAME){
-	    	dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[myMsg->seq].username);
+	    	int forwardtoo;
+	    	if(myMsg->dest == TOS_NODE_ID){
+		dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[myMsg->seq].username);
+		}else{
+			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
+			forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
+			call Sender.send(sendPackage, forwardtoo);
+		}
+	    	
 	    
 	    }
             else if (myMsg->protocol == PROTOCOL_PING) //pings
