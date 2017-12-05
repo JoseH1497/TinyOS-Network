@@ -844,7 +844,7 @@ implementation{
 				}
 				printf("\n");
 				makePack(&sendPackage, TOS_NODE_ID,2, MAX_TTL, WHISPER, msgSize2, (uint8_t*) data, msgSize2);
-				forwardto = shortestPath(nodePorts[i].destAddr, TOS_NODE_ID);
+				forwardto = shortestPath((int) nodePorts[i].destAddr, TOS_NODE_ID);
 				dbg(TRANSPORT_CHANNEL,"Forwarding to %d \n", forwardto);
 				call Sender.send(sendPackage, 2);
 				break;
