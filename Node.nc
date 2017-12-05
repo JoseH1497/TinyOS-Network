@@ -342,7 +342,8 @@ implementation{
 
                 
             }else if(myMsg->protocol == PROTOCOL_TCP){
-                int forwardPackage, freePort;
+                int forwardPackage;
+		int freePort;
                 if(myMsg->dest == TOS_NODE_ID){
                     TCP *tcpPack = (TCP*) myMsg->payload;
                     TCP newTCPPackage;
@@ -365,7 +366,7 @@ implementation{
                             nodePorts[freePort].lastSeq = newTCPPackage.seqNum;
                             nodePorts[freePort].nextSeq = newTCPPackage.ACK;
 			    memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
-			    memcpy(nodePorts[freeport].username, tcpPack->payload, sizeof(tcpPack->payload));
+			    memcpy(nodePorts[freePort].username, tcpPack->payload, sizeof(tcpPack->payload));
 			    dbg(TRANSPORT_CHANNEL,"payloadSERVER %s\n",newTCPPackage.payload);
                             //dbg(TRANSPORT_CHANNEL,"Server recieved SYN from client and is now sending SYN back to client\n");
                             //dbg(TRANSPORT_CHANNEL,"Server expects sequence number %d from Client %d on port %d\n", newTCPPackage.ACK, myMsg->src, freePort);
