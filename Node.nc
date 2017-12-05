@@ -259,7 +259,7 @@ implementation{
 			}
 			printf("\n");
 		}else{
-			dbg(TRANSPORT_CHANNEL,"-----------WHISPER MESSAGED\n");
+			dbg(TRANSPORT_CHANNEL,"-----------WHISPER MESSAGED meant for someone else------\n");
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
 			forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
 			call Sender.send(sendPackage, forwardtoo);
@@ -763,7 +763,7 @@ implementation{
         makePack(&sendPackage, TOS_NODE_ID, client, MAX_TTL, HELLO, 0, payload,PACKET_MAX_PAYLOAD_SIZE);
 	
         forward = shortestPath(client, TOS_NODE_ID);
-	//dbg(TRANSPORT_CHANNEL,"Server forwarding to %d\n", forward);
+	dbg(TRANSPORT_CHANNEL,"Server forwarding to %d\n", forward);
 	//dbg(GENERAL_CHANNEL, "Packet payload %s\n", sendPackage.payload);
         call Sender.send(sendPackage, forward);
 
