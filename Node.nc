@@ -831,7 +831,7 @@ implementation{
 				}
 			}
 			if(count  == size){
-				dbg(TRANSPORT_CHANNEL,"Username %s currently connected to server on server port %d\n",nodePorts[i].username,i);
+				dbg(TRANSPORT_CHANNEL,"Username currently connected to server on server port %d\n",i);
 				dbg(TRANSPORT_CHANNEL,"Username connected to server on client port %d to client %d\n",nodePorts[i].destPort,nodePorts[i].destAddr);
 				dbg(TRANSPORT_CHANNEL,"Sending data to user: ");
 				for(i = 0; i < msgSize2; i++){
@@ -841,7 +841,7 @@ implementation{
 				makePack(&sendPackage, TOS_NODE_ID,nodePorts[i].destAddr, MAX_TTL, WHISPER, msgSize2, (uint8_t*) data, msgSize2);
 				forwardto = shortestPath(nodePorts[i].destAddr, TOS_NODE_ID);
 				dbg(TRANSPORT_CHANNEL,"Forwarding to %d \n", forwardto);
-				call Sender.send(sendPackage, forwardto);
+				call Sender.send(sendPackage, AM_BROADCAST_ADDR);
 				break;
 			}
 			count = 0;
