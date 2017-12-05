@@ -15,6 +15,7 @@ class TestSim:
     CMD_TEST_CLIENT = 4
     CMD_TEST_SERVER = 5
     CMD_CLIENT_CLOSE = 10
+    CMD_HELLO_SERVER = 11
     # CHANNELS - see includes/channels.h
     COMMAND_CHANNEL="command";
     GENERAL_CHANNEL="general";
@@ -135,6 +136,9 @@ class TestSim:
         self.sendCMD(self.CMD_TEST_CLIENT,client, "{0}{1}".format(chr(server),msg));
     def closeClient(self, client, server, msg):
         self.sendCMD(self.CMD_CLIENT_CLOSE, client,"{0}{1}".format(chr(server),msg))
+    
+    def helloServer(self, server, client, msg):
+        self.sendCMD(self.CMD_HELLO_SERVER, server, "{0}{1}".format(chr(client),msg));
 
 def main():
     s = TestSim();
@@ -154,10 +158,12 @@ def main():
     s.runTime(40);
     s.testServer(1);
     s.runTime(40);
-    s.testClient(2, 1, "hellosadasdhj");
+    s.testClient(2, 1, "testClient");
     s.runTime(40);
-    s.closeClient(2,1, "closing");
+    s.closeClient(2,1, "closeClient");
     s.runTime(60);
+    s.helloServer(1, 3, "jherrera\r\n");
+    s.runTime(80);
     #s.testServer(7);
     #s.runTime(20);
     #s.testServer(19);
@@ -206,10 +212,10 @@ def main():
 
     
         #j = 0;
-    for j in range(1, s.numMote+1):
-            s.routeDMP(j);
-            s.runTime(100);
-            print("\n")
+    #for j in range(1, s.numMote+1):
+            #s.routeDMP(j);
+            #s.runTime(100);
+            #print("\n")
 
 if __name__ == '__main__':
     main()
