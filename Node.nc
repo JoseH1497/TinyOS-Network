@@ -720,6 +720,17 @@ implementation{
 
 
     }
+    event void CommandHandler.broadCastMessage(int server, uint8_t *payload){
+    	int nextNode= 0;
+        dbg(GENERAL_CHANNEL, "----Broadcasting message sending to SERVER----- \n");
+        
+        makePack(&sendPackage, TOS_NODE_ID, server, MAX_TTL, SERVER_BROADCAST, 2, payload, PACKET_MAX_PAYLOAD_SIZE);
+        nextNode = shortestPath(server, TOS_NODE_ID);
+        
+        
+        call Sender.send(sendPackage, nextNode);
+    
+    }
     void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, int seq, uint8_t* payload, uint8_t length){
         Package->src = src;
         Package->dest = dest;
