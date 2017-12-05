@@ -768,6 +768,8 @@ implementation{
 	int size = 0;
 	int msgSize = 0;
 	int msgSize2 = 0;
+	int count = 0;
+	int j;
 	char user[sizeof(username)];
 	char msg[sizeof(username)];
 	char data[sizeof(username)];
@@ -809,13 +811,26 @@ implementation{
 	}
 	printf("\n");
 	dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", user);
-	//dbg(TRANSPORT_CHANNEL,"USERNAMESIZE :%d\n", sizeof(user));
-	if(msg != "HI!"){
-		//dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
+	
+	for(i = 0; i <256; i++){
+		if(nodePorts[i].hasClient == TRUE){
+			payload = &nodePorts[i].username;
+			for(j = 0; j < size; j++){
+				if(payload[j] == user[j]){
+					count++;
+				}
+			}
+			if(count  == size){
+				dbg(TRANSPORT_CHANNEL,"Username %s currently connected to server on server port %d\n",nodePorts[i].username,i);
+				
+				
+				break;
+			}
+			count = 0;
+			
+		}
 	}
-	if(user != "jherr"){
-		//dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
-	}
+	
     }
     
     void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, int seq, uint8_t* payload, uint8_t length){
