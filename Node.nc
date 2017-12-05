@@ -798,7 +798,7 @@ implementation{
 			break;
 		}
 		msgSize2++;
-		data[i] ==msg[i]; 
+		data[i] =msg[i]; 
 	}
 	
     	
