@@ -769,14 +769,14 @@ implementation{
 	char user[sizeof(username)];
 	for(i = 0; i < sizeof(username); i++){
 		user[i] = username[i];
-		dbg(TRANSPORT_CHANNEL,"USERNAME : %c\n", user[i]);
+		//dbg(TRANSPORT_CHANNEL,"USERNAME : %c\n", user[i]);
 	}
 	for(i = 0; i < sizeof(user); i++){
 		if(user[i] != '?'){
 			size++;
 		}
 	}
-	
+	dbg(TRANSPORT_CHANNEL,"USERNAME : %s\n", username);
 	//for(i = 0; i < size; i++){
 	//	userNamed[i] = user[i];
 	//}
