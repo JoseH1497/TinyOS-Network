@@ -90,8 +90,12 @@ implementation{
                signal CommandHandler.whisperMessage(&buff[0], &buff[1]);
                break;
             case CMD_BROADCAST:
-               dbg(COMMAND_CHANNEL, "Command: Broacast\n");
+               dbg(COMMAND_CHANNEL, "Command: Broadcast\n");
                signal CommandHandler.broadCastMessage(buff[0], &buff[1]);
+               break;
+            case CMD_PRINT_USERS:
+               dbg(COMMAND_CHANNEL, "Command: Get list of Users\n");
+               signal CommandHandler.listUsers(buff[0], &buff[1]);
                break;
             default:
                 dbg(COMMAND_CHANNEL, "CMD_ERROR: \"%d\" does not match any known commands.\n", msg->id);
