@@ -13,6 +13,6 @@ interface CommandHandler{
    event void clientClose(int server, uint8_t *payload);
    event void helloServer(int client, uint8_t *payload);
    event void broadCastMessage(int server, uint8_t *payload);
-  
+   event void listUsers(int server, uint8_t *payload);
    
 }
