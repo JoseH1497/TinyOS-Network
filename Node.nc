@@ -773,15 +773,18 @@ implementation{
 		
 	}
 	for(i = 0; i < sizeof(user); i++){
-		if(user[i] != '?'){
+		if(user[i] != ' '){
 			size++;
+		}
+		if(user[i] == ' '){
+			break;
 		}
 	}
 	dbg(TRANSPORT_CHANNEL,"USERNAME :%s\n", username);
 	dbg(TRANSPORT_CHANNEL,"SIZE :%d\n", size);
 	
 	for(i = 0; i < sizeof(username); i++){
-		msg[i] = username[i+2+size];
+		msg[i] = username[i+1+size];
 	}
 	
 	
