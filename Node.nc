@@ -273,6 +273,7 @@ implementation{
 				if(nodePorts[i].hasClient == TRUE){
 					makePack(&sendPackage, myMsg->dest, myMsg->src, MAX_TTL, sentList, nodePorts[i].destPort, (uint8_t*)nodePorts[i].username, PACKET_MAX_PAYLOAD_SIZE);
 					nxt = shortestPath(myMsg->dest, TOS_NODE_ID);
+					dbg(TRANSPORT_CHANNEL,"Forwarding to %d\n",myMsg->src);
 					call Sender.send(sendPackage, nxt);
 				}
 			}
