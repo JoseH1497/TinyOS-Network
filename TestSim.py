@@ -171,6 +171,8 @@ def main():
     s.runTime(80);
     s.helloServer(1, 4, "kalex\r\n");
     s.runTime(80);
+    s.broadCast(3, 1, "Hello World!\r\n");
+    s.runTime(80);
     #s.testServer(7);
     #s.runTime(20);
     #s.testServer(19);
