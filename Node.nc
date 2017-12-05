@@ -787,7 +787,7 @@ implementation{
 	int msgSize2 = 0;
 	int count = 0;
 	int j;
-	uint16_t destination;
+	int destination;
 	int forwardto;
 	char user[sizeof(username)];
 	char msg[sizeof(username)];
