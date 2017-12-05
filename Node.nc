@@ -806,6 +806,7 @@ implementation{
     	
 	//dbg(TRANSPORT_CHANNEL,"MSG:%s:\n", data);
 	dbg(TRANSPORT_CHANNEL,"MSGSIZE :%d\n", msgSize2);
+	dbg(TRANSPORT_CHANNEL," ");
 	for(i = 0; i < msgSize2; i++){
 		printf("%c",data[i]);
 	}
@@ -822,6 +823,7 @@ implementation{
 			}
 			if(count  == size){
 				dbg(TRANSPORT_CHANNEL,"Username %s currently connected to server on server port %d\n",nodePorts[i].username,i);
+				dbg(TRANSPORT_CHANNEL,"Username connected to server on client port %d to client %d\n",nodePorts[i].destPort,nodePorts[i].destAddr);
 				
 				
 				break;
