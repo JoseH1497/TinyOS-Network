@@ -23,6 +23,7 @@ enum{
     HELLO = 223,
     getUSERNAME = 220,
     saveUSERNAME = 221,
+    SERVER_BROADCAST = 219,
 
 
     //Flags
