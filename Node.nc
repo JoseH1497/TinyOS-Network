@@ -783,7 +783,7 @@ implementation{
 			break;
 		}
 	}
-	dbg(TRANSPORT_CHANNEL,"USERNAME :%s\n", username);
+	dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", username);
 	dbg(TRANSPORT_CHANNEL,"SIZE :%d\n", size);
 	
 	for(i = 0; i < sizeof(username); i++){
@@ -797,13 +797,13 @@ implementation{
     	
 	dbg(TRANSPORT_CHANNEL,"MSG :%s\n", msg);
 	dbg(TRANSPORT_CHANNEL,"MSGSIZE :%d\n", sizeof(msg));
-	dbg(TRANSPORT_CHANNEL,"USERNAME :%s\n", user);
+	dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", user);
 	dbg(TRANSPORT_CHANNEL,"USERNAMESIZE :%d\n", sizeof(user));
 	if(msg != "HI!"){
-		dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
+		//dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
 	}
 	if(user != "jherrera"){
-		dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
+		//dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
 	}
     }
     
