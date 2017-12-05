@@ -1108,6 +1108,7 @@ implementation{
             nodePorts[i].destAddr = 0; //initially
             nodePorts[i].portNumber = i;
             nodePorts[i].state = AVAILABLE;
+	    nodePorts[i].hasClient = FALSE;
         }
         for(i = 0; i < 256; i++){
             for(j = 0; j < 128; j++){
