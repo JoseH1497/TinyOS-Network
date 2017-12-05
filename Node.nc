@@ -782,15 +782,16 @@ implementation{
 	dbg(TRANSPORT_CHANNEL,"SIZE :%d\n", size);
 	
 	for(i = 0; i < sizeof(username); i++){
-		msg[i] = username[i+1+size];
-		if(username[i+1+size] == '\r'){
+		if(username[i+1+size] == '\r' || username[i+1+size] == '\n'){
 			break;
 		}
+		msg[i] = username[i+1+size];
+		
 	}
 	
 	
     	
-	dbg(TRANSPORT_CHANNEL,"MSG :%s:\n", msg);
+	dbg(TRANSPORT_CHANNEL,"MSG:%s:\n", msg);
 	dbg(TRANSPORT_CHANNEL,"MSGSIZE :%d\n", sizeof(msg));
 	dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", user);
 	dbg(TRANSPORT_CHANNEL,"USERNAMESIZE :%d\n", sizeof(user));
