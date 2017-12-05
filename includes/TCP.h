@@ -26,7 +26,8 @@ enum{
     SERVER_BROADCAST = 219,
     serverSentBROADCAST = 218,
     WHISPER = 217,
-    listofUsers = 215,
+    requestList = 215,
+    sentList =214,
 
 
     //Flags
