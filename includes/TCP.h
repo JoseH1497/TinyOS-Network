@@ -6,8 +6,9 @@
 enum{
 
     BUFFERSIZE = 16,
-    SERVERPORT =255,
+    SERVERPORT = 255,
     LISTENING = 700,
+    LISTENING_SERVER = 689,
     AVAILABLE = 701,
     SYN_SENT = 702,
     SYN_RCVD = 703,
@@ -19,6 +20,9 @@ enum{
     BUFFER = PACKET_MAX_PAYLOAD_SIZE - 8,
     sendServerData = 888,
     clientSentData = 999,
+    HELLO = 1001,
+
+
     //Flags
     URG = 100,
     ACK = 200,
@@ -42,6 +46,7 @@ typedef nx_struct TCP{
         nx_uint8_t dataLength;
         nx_uint8_t data[PACKET_MAX_PAYLOAD_SIZE -8];
         nx_uint8_t doneSending;
+        nx_uint8_t payload[PACKET_MAX_PAYLOAD_SIZE];
         
 
 }TCP;
@@ -84,11 +89,7 @@ typedef struct Port{
 
 }Port;
 
-typedef struct socket_addr_t{
-      uint8_t srcPort;
-      uint8_t srcAddr;
 
-}socket_addr_t;
 
 
 
