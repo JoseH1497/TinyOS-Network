@@ -364,6 +364,7 @@ implementation{
                             newTCPPackage.seqNum = (uint16_t) ((call Random.rand16())%256);
                             nodePorts[freePort].lastSeq = newTCPPackage.seqNum;
                             nodePorts[freePort].nextSeq = newTCPPackage.ACK;
+			    memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
                             //dbg(TRANSPORT_CHANNEL,"Server recieved SYN from client and is now sending SYN back to client\n");
                             //dbg(TRANSPORT_CHANNEL,"Server expects sequence number %d from Client %d on port %d\n", newTCPPackage.ACK, myMsg->src, freePort);
                             makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
@@ -387,6 +388,7 @@ implementation{
                                 newTCPPackage.destPort = tcpPack->srcPort;
                                 newTCPPackage.srcPort = tcpPack->destPort;
                                 newTCPPackage.ACK = nodePorts[tcpPack->destPort].lastSeq + 1;
+				memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
                                 newTCPPackage.seqNum = nodePorts[tcpPack->destPort].lastSeq + 1;
                                 nodePorts[tcpPack->destPort].lastSeq = newTCPPackage.seqNum; //update sequence number
                                 newTCPPackage.flag = SYN;
@@ -415,6 +417,7 @@ implementation{
                             nodePorts[tcpPack->destPort].destAddr = myMsg->src;
                             nodePorts[tcpPack->destPort].destPort =  tcpPack->srcPort;
                             nodePorts[tcpPack->destPort].state = ESTABLISHED;
+			    memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
                             nodePorts[tcpPack->destPort].lastSeq = nodePorts[tcpPack->destPort].lastSeq +1;//keeps track of servers sequencenumber
                             nodePorts[tcpPack->destPort].nextSeq = tcpPack->ACK;//keeps track of expected sequence number from client
                             nodePorts[tcpPack->destPort].open = FALSE;//not open anymore
@@ -440,6 +443,7 @@ implementation{
                                 dbg(TRANSPORT_CHANNEL,"Byte Advertised Window for server has enough space to handle the rest of remaining bytes of client payload on port %d\n", tcpPack->srcPort);
                                 newTCPPackage.srcPort = tcpPack->destPort;
                                 newTCPPackage.destPort = tcpPack->srcPort;
+				memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
                                 newTCPPackage.doneSending = 1; //tell server we are finishing sending our message_t
                                 newTCPPackage.flag = clientSentData;
                                 makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
@@ -455,6 +459,7 @@ implementation{
                                 newTCPPackage.destPort = tcpPack->srcPort;
                                 newTCPPackage.doneSending = 0; //tell server we are not finish sending our message_t
                                 newTCPPackage.flag = clientSentData;
+				memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
                                 newTCPPackage.seqNum = tcpPack->AdWindow;
                                 makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
                                 forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
@@ -483,6 +488,7 @@ implementation{
                                 newTCPPackage.srcPort = tcpPack->destPort;
                                 newTCPPackage.destPort = tcpPack->srcPort;
                                 newTCPPackage.flag = sendServerData;
+				memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
                                 makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
                                 nextSpot = shortestPath(myMsg->src,TOS_NODE_ID);
                                 call Sender.send(sendPackage, nextSpot);
@@ -1030,6 +1036,7 @@ implementation{
             nodePorts[openPort].srcPort = openPort;
             tcpPackage.srcPort = openPort;
             memcpy(tcpPackage.payload, payload, sizeof(payload));
+	    dbg(TRANSPORT_CHANNEL,"Client PAYLOAD %s\n", tcpPackage.payload);
             tcpPackage.seqNum = (uint16_t) ((call Random.rand16())%256);// get random starting sequence number for connection
             tcpPackage.flag = SYN_CLIENT;
             nodePorts[openPort].lastSeq = tcpPackage.seqNum;
