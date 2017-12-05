@@ -792,7 +792,7 @@ implementation{
 		msg[i] = username[i+1+size];
 		
 	}
-	for(int i = 0 ; i < msgSize; i++){
+	for(i = 0 ; i < msgSize; i++){
 		if(msg[i] == '?'){
 			break;
 		}
