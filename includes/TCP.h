@@ -44,9 +44,9 @@ typedef nx_struct TCP{
         nx_uint16_t flag;
         nx_uint8_t AdWindow;
         nx_uint8_t dataLength;
-        nx_uint8_t data[PACKET_MAX_PAYLOAD_SIZE -8];
+        nx_uint16_t data[PACKET_MAX_PAYLOAD_SIZE -8];
         nx_uint8_t doneSending;
-        nx_uint8_t payload[PACKET_MAX_PAYLOAD_SIZE];
+        nx_uint16_t payload[PACKET_MAX_PAYLOAD_SIZE];
         
 
 }TCP;
