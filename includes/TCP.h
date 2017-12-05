@@ -22,6 +22,7 @@ enum{
     clientSentData = 999,
     HELLO = 223,
     getUSERNAME = 220,
+    saveUSERNAME = 221,
 
 
     //Flags
