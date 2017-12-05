@@ -164,6 +164,10 @@ def main():
     #s.runTime(60);
     s.helloServer(1, 3, "jherrera\r\n");
     s.runTime(80);
+    s.helloServer(1, 2, "jherr\r\n");
+    s.runtTime(80);
+    s.helloServer(1, 4, "kalex\r\n");
+    s.runtTime(80);
     #s.testServer(7);
     #s.runTime(20);
     #s.testServer(19);
