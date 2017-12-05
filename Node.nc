@@ -25,6 +25,7 @@ typedef nx_struct netMap{
 
 int seqNum = 1, updateNum = 1;
 int numOfVertices = 20;
+int listNum = 0;
 module Node{
     uses interface Boot;
     
@@ -289,8 +290,10 @@ implementation{
 	    
 	    }else if(myMsg->protocol == sentList){
 	    	int nextTo;
+		
 		if(myMsg->dest == TOS_NODE_ID){
-			printf("%s, ", myMsg->payload);
+			printf("listNum: %s\n ", myMsg->payload);
+			listNum++;
 		
 		}else{
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
