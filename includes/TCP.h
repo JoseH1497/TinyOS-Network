@@ -100,7 +100,7 @@ typedef struct Port{
         char recievedData[128];
         char sentData[128];
         uint16_t sizeofPayload;
-
+        uint8_t username[PACKET_MAX_PAYLOAD_SIZE];
 
 }Port;
 
