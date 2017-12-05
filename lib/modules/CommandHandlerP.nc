@@ -87,7 +87,7 @@ implementation{
                 break;
             case CMD_WHISPER:
                dbg(COMMAND_CHANNEL, "Command: Whisper\n");
-               signal CommandHandler.whisperMessage(&buff[0], &buff[1]);
+               signal CommandHandler.whisperMessage(&buff[0], &buff[8]);
                break;
             case CMD_BROADCAST:
                dbg(COMMAND_CHANNEL, "Command: Broacast\n");
