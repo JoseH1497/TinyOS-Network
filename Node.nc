@@ -186,7 +186,10 @@ implementation{
 
 
 
-            }
+            }else if(myMsg->protocol == getUSERNAME){
+	    	dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[myMsg->seq].username);
+	    
+	    }
             else if (myMsg->protocol == PROTOCOL_PING) //pings
             {
                
@@ -413,12 +416,19 @@ implementation{
                         if(tcpPack->ACK == nodePorts[tcpPack->destPort].nextSeq ){
                             //dbg(TRANSPORT_CHANNEL,"Server recieved expected Sequence number: %d from client %d\n",nodePorts[tcpPack->destPort].nextSeq, myMsg->src);
                             dbg(TRANSPORT_CHANNEL,"-------CONNECTION ESTABLISHED, Three-WAY Handshake Complete---------\n");
-                             dbg(TRANSPORT_CHANNEL,"Client:%d Port: %d\n", myMsg->src, tcpPack->srcPort);
-                             dbg(TRANSPORT_CHANNEL,"Server:%d Port: %d\n", TOS_NODE_ID, tcpPack->destPort);
+                            dbg(TRANSPORT_CHANNEL,"Client:%d Port: %d\n", myMsg->src, tcpPack->srcPort);
+                            dbg(TRANSPORT_CHANNEL,"Server:%d Port: %d\n", TOS_NODE_ID, tcpPack->destPort);
+			    
                             if(tcpPack->payload != "TestClient" || tcpPack->payload != "closeClient"){
-                                dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[tcpPack->destPort].username);
-                            }
-                            nodePorts[tcpPack->destPort].destAddr = myMsg->src;
+			    	
+				makePack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, getUSERNAME, tcpPack->srcPort, &myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
+                                //dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[tcpPack->destPort].username);
+				forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
+                                call Sender.send(sendPackage, forwardPackage);
+				
+                            }else{
+			     
+			     nodePorts[tcpPack->destPort].destAddr = myMsg->src;
                             nodePorts[tcpPack->destPort].destPort =  tcpPack->srcPort;
                             nodePorts[tcpPack->destPort].state = ESTABLISHED;
 			    memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
@@ -435,6 +445,9 @@ implementation{
                             makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
                                 forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
                                 call Sender.send(sendPackage, forwardPackage);
+			     
+			     }
+                            
 
 
                         }else{
