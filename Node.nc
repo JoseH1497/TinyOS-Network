@@ -319,6 +319,23 @@ implementation{
                 
 
                 
+            }else if(myMsg->protocol == HELLO){
+                int for;
+                if(myMsg->dest == TOS_NODE_ID){
+                    dbg(TRANSPORT_CHANNEL,"HELLO COMMAND FROM SERVER %d\n",myMsg->src);
+                    dbg(TRANSPORT_CHANNEL,"ATTEMPTING TO ESTABLISH CONNECTION TO SERVER %d\n",myMsg->src);
+                    TestClient(myMsg->src, myMsg->payload);
+
+                }else{
+                    makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL - 1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
+                    for = shortestPath(myMsg->dest, TOS_NODE_ID);
+                    call Sender.send(sendPackage, for);
+                }
+                
+
+
+
+
             }else if(myMsg->protocol == PROTOCOL_TCP){
                 int forwardPackage, freePort;
                 if(myMsg->dest == TOS_NODE_ID){
@@ -387,6 +404,9 @@ implementation{
                             dbg(TRANSPORT_CHANNEL,"-------CONNECTION ESTABLISHED, Three-WAY Handshake Complete---------\n");
                              dbg(TRANSPORT_CHANNEL,"Client:%d Port: %d\n", myMsg->src, tcpPack->srcPort);
                              dbg(TRANSPORT_CHANNEL,"Server:%d Port: %d\n", TOS_NODE_ID, tcpPack->destPort);
+                            if(tcpPack->payload != "TestClient" || tcpPack->payload != "closeClient"){
+                                dbg(TRANSPORT_CHANNEL, "Hello %d\n", tcpPack->payload);
+                            }
                             nodePorts[tcpPack->destPort].destAddr = myMsg->src;
                             nodePorts[tcpPack->destPort].destPort =  tcpPack->srcPort;
                             nodePorts[tcpPack->destPort].state = ESTABLISHED;
@@ -625,6 +645,16 @@ implementation{
     
     event void CommandHandler.setAppClient(){}
     
+    event void CommandHandler.helloServer(int client, uint8_t *payload){
+        int forward; 
+        nodePorts[41].state = LISTENING_SERVER;
+        dbg(TRANSPORT_CHANNEL,"Server listening on port 41\n");
+        makePack(&sendPackage, TOS_NODE_ID, client, MAX_TTL, HELLO, 0, payload,PACKET_MAX_PAYLOAD_SIZE);
+        forward = shortestPath(client, TOS_NODE_ID);
+        call Sender.send(sendPackage, forward);
+
+
+    }
     void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, int seq, uint8_t* payload, uint8_t length){
         Package->src = src;
         Package->dest = dest;
@@ -991,6 +1021,7 @@ implementation{
             nodePorts[openPort].state = SYN_SENT; //port knows it sent an SYN and thus knows port is being used as a client 
             nodePorts[openPort].srcPort = openPort;
             tcpPackage.srcPort = openPort;
+            memcpy(tcpPackage.payload, payload, sizeof(payload));
             tcpPackage.seqNum = (uint16_t) ((call Random.rand16())%256);// get random starting sequence number for connection
             tcpPackage.flag = SYN_CLIENT;
             nodePorts[openPort].lastSeq = tcpPackage.seqNum;
@@ -1064,4 +1095,5 @@ implementation{
         return sizeAvail;
     }
 
+}
 }
