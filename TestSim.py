@@ -16,6 +16,7 @@ class TestSim:
     CMD_TEST_SERVER = 5
     CMD_CLIENT_CLOSE = 10
     CMD_HELLO_SERVER = 11
+    CMD_BROADCAST = 12
     # CHANNELS - see includes/channels.h
     COMMAND_CHANNEL="command";
     GENERAL_CHANNEL="general";
@@ -139,6 +140,8 @@ class TestSim:
     
     def helloServer(self, server, client, msg):
         self.sendCMD(self.CMD_HELLO_SERVER, server, "{0}{1}".format(chr(client),msg));
+    def broadCast(self, client, server, msg);
+        self.sendCMD(self.CMD_BROADCAST, client,  "{0}{1}".format(chr(server),msg));
 
 def main():
     s = TestSim();
