@@ -71,7 +71,22 @@ typedef struct socket_t{
 
 }socket_t;
 
+typedef struct socket_addr_t{
+        uint8_t srcPort;
+        char sentData[128]; //buffer size = 128
+        
+        uint8_t srcAddr;
+        char recievedData[128];
+        uint8_t destPort;
+        uint8_t destAddr;
+        uint8_t connectionState; //state
 
+        
+        
+        
+
+
+}socket_addr_t;
 
 typedef struct Port{
         bool open;
