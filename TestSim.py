@@ -145,7 +145,7 @@ class TestSim:
         self.sendCMD(self.CMD_BROADCAST, client,  "{0}{1}".format(chr(server),msg));
     
     def whisper(self, server, username, msg):
-        self.sendCMD(self.CMD_WHISPER, server, "{0}{1}".format(chr(username),msg));
+        self.sendCMD(self.CMD_WHISPER, server, "{0}{1}".format(username,msg));
     
 def main():
     s = TestSim();
@@ -177,8 +177,8 @@ def main():
     s.runTime(80);
     s.broadCast(3, 1, "Hello World!\r\n");
     s.runTime(80);
-    #s.whisper(1,"jherrera", "HI!\r\n");
-    s.whisper(1,3, "HI!\r\n");
+    s.whisper(1,"jherrera", "HI!\r\n");
+    #s.whisper(1,3, "HI!\r\n");
     s.runTime(80);
     #s.testServer(7);
     #s.runTime(20);
