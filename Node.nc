@@ -292,7 +292,7 @@ implementation{
 	    	int nextTo;
 		
 		if(myMsg->dest == TOS_NODE_ID){
-			printf("listNum: %s\n ", myMsg->payload);
+			printf("%d: %s\n ",listNum, myMsg->payload);
 			listNum++;
 		
 		}else{
