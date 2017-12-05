@@ -781,7 +781,7 @@ implementation{
 	dbg(TRANSPORT_CHANNEL,"SIZE : %d\n", size);
 	
 	for(i = 0; i < sizeof(username); i++){
-		msg[i] = username[i+1+size];
+		msg[i] = username[i+2+size];
 	}
 	//payload = userNamed;
 	
