@@ -769,20 +769,15 @@ implementation{
 	char user[sizeof(username)];
 	char msg[sizeof(username)];
 	for(i = 0; i < sizeof(username); i++){
-		user[i] = username[i];
 		if(user[i] == ' '){
 			break;
 		}
+		size++;
+		user[i] = username[i];
+		
 		
 	}
-	for(i = 0; i < sizeof(user); i++){
-		if(user[i] != '\n' || user[i] != '\0'){
-			size++;
-		}
-		if(user[i] != '\n' || user[i] != '\0'){
-			break;
-		}
-	}
+	
 	dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", username);
 	dbg(TRANSPORT_CHANNEL,"SIZE :%d\n", size);
 	
