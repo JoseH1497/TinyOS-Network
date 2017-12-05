@@ -6,7 +6,7 @@ interface CommandHandler{
    event void printLinkState();
    event void printDistanceVector();
    event void setTestServer();
-   event void whisperMessage(int username, uint8_t *payload);
+   event void whisperMessage(uint8_t *username, uint8_t *payload);
    event void setTestClient(int server, uint8_t *payload);
    event void setAppServer();
    event void setAppClient();
