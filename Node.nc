@@ -362,7 +362,7 @@ implementation{
                     if(tcpPack->flag == SYN_CLIENT){//recieved connection request from client
                         freePort = freeServerPort(); 
                         if(freePort != -1){
-                            //dbg(TRANSPORT_CHANNEL,"Binding client %d with client port %d to Server port %d\n", myMsg->src, tcpPack->srcPort, freePort);
+                            dbg(TRANSPORT_CHANNEL,"Binding client %d with client port %d to Server port %d\n", myMsg->src, tcpPack->srcPort, freePort);
                             nodePorts[freePort].open = FALSE; //not an open port anymore
                             nodePorts[freePort].destAddr = myMsg->src; //port only accepting connections from this address 
                             nodePorts[freePort].destPort = tcpPack->srcPort; //port only accepts data from destAddr and clients port 
@@ -1125,6 +1125,20 @@ implementation{
                         return nodePorts[i].portNumber;
                     }
         }
+	
+                
+                    if(nodePorts[41].state == LISTENING_SERVER){
+		    	for(i = 0; i < 256; i++){
+			if(nodePorts[i].open == TRUE){
+			nodePorts[i].state = AWAITING;
+                        found = TRUE;
+			return nodePorts[i].portNumber;
+			}
+                        
+                        
+			}
+                    }
+        
         
         dbg(TRANSPORT_CHANNEL,"No open listening ports for %d\n", TOS_NODE_ID);
         return -1;
