@@ -10,4 +10,5 @@ interface CommandHandler{
    event void setAppServer();
    event void setAppClient();
    event void clientClose(int server, uint8_t *payload);
+   event void helloServer(int client, uint8_t *payload);
 }
