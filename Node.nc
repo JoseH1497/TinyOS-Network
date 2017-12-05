@@ -204,8 +204,8 @@ implementation{
 	    	int forwardtoo;
 	    	if(myMsg->dest == TOS_NODE_ID){
 			memcpy(nodePorts[myMsg->seq].username, myMsg->payload, sizeof(myMsg->payload));
-			dbg(TRANSPORT_CHANNEL, "PORT %d\n", myMsg->seq);
-		 	dbg(TRANSPORT_CHANNEL, "SAVED USERNAME %s\n", nodePorts[myMsg->seq].username);
+			//dbg(TRANSPORT_CHANNEL, "PORT %d\n", myMsg->seq);
+		 	//dbg(TRANSPORT_CHANNEL, "SAVED USERNAME %s\n", nodePorts[myMsg->seq].username);
 		}else{
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
 			forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
