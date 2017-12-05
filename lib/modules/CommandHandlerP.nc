@@ -85,14 +85,14 @@ implementation{
                 dbg(COMMAND_CHANNEL, "Command: Hello\n");
                 signal CommandHandler.helloServer(buff[0], &buff[1]);
                 break;
+            case CMD_WHISPER:
+               dbg(COMMAND_CHANNEL, "Command: Whisper\n");
+               signal CommandHandler.whisperMessage(buff[0], &buff[1]);
+               break;
             case CMD_BROADCAST:
                dbg(COMMAND_CHANNEL, "Command: Broacast\n");
                signal CommandHandler.broadCastMessage(buff[0], &buff[1]);
                break;
-            //case CMD_WHISPER:
-             //  dbg(COMMAND_CHANNEL, "Command: Whisper\n");
-             //  signal CommandHandler.whisper(buff[0], &buff[1]);
-              // break;
             default:
                 dbg(COMMAND_CHANNEL, "CMD_ERROR: \"%d\" does not match any known commands.\n", msg->id);
                 break;
