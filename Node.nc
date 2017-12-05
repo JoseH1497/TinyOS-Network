@@ -203,7 +203,7 @@ implementation{
 	    }else if(myMsg->protocol == saveUSERNAME){
 	    	int forwardtoo;
 	    	if(myMsg->dest == TOS_NODE_ID){
-			memcpy(nodePorts[myMsg->seq].username, payload, sizeof(payload));
+			memcpy(nodePorts[myMsg->seq].username, myMsg->payload, sizeof(myMsg->payload));
 			dbg(TRANSPORT_CHANNEL, "PORT %d\n", myMsg->seq);
 		 	dbg(TRANSPORT_CHANNEL, "SAVED USERNAME %s\n", nodePorts[myMsg->seq].username);
 		}else{
