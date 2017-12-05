@@ -795,10 +795,10 @@ implementation{
 	dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", user);
 	dbg(TRANSPORT_CHANNEL,"USERNAMESIZE :%d\n", sizeof(user));
 	if(msg != "HI!"){
-		//dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
+		dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
 	}
-	if(user != "jherrera"){
-		//dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
+	if(user != "jherr"){
+		dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
 	}
     }
     
