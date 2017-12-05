@@ -140,7 +140,7 @@ class TestSim:
     
     def helloServer(self, server, client, msg):
         self.sendCMD(self.CMD_HELLO_SERVER, server, "{0}{1}".format(chr(client),msg));
-    def broadCast(self, client, server, msg);
+    def broadCast(self, client, server, msg):
         self.sendCMD(self.CMD_BROADCAST, client,  "{0}{1}".format(chr(server),msg));
 
 def main():
