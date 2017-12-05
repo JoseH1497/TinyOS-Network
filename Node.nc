@@ -254,6 +254,7 @@ implementation{
 	    	if(myMsg->dest == TOS_NODE_ID){
 			dbg(TRANSPORT_CHANNEL,"-----------WHISPER MESSAGED RECIEVED FROM Server %d PAYLOAD: %s------------\n",myMsg->src, myMsg->payload);
 		}else{
+			dbg(TRANSPORT_CHANNEL,"-----------WHISPER MESSAGED\n");
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
 			forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
 			call Sender.send(sendPackage, forwardtoo);
@@ -830,7 +831,7 @@ implementation{
 				}
 			}
 			if(count  == size){
-				dbg(TRANSPORT_CHANNEL,"Username %s currently connected to server on server port %d\n",user,i);
+				dbg(TRANSPORT_CHANNEL,"Username %s currently connected to server on server port %d\n",user,WHISPER);
 				dbg(TRANSPORT_CHANNEL,"Username connected to server on client port %d to client %d\n",nodePorts[i].destPort,nodePorts[i].destAddr);
 				dbg(TRANSPORT_CHANNEL,"Sending data to username %s :", user);
 				for(i = 0; i < msgSize2; i++){
