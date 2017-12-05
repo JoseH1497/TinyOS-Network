@@ -95,7 +95,7 @@ typedef struct socket_addr_t{
 
 typedef struct Port{
         bool open;
-        uint8_t destAddr;
+        uint16_t destAddr;
         int destPort;
         int portNumber;
         uint16_t lastSeq;
