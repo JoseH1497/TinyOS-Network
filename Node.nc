@@ -320,7 +320,7 @@ implementation{
 
                 
             }else if(myMsg->protocol == HELLO){
-                int for;
+                int for = -1;
                 if(myMsg->dest == TOS_NODE_ID){
                     dbg(TRANSPORT_CHANNEL,"HELLO COMMAND FROM SERVER %d\n",myMsg->src);
                     dbg(TRANSPORT_CHANNEL,"ATTEMPTING TO ESTABLISH CONNECTION TO SERVER %d\n",myMsg->src);
