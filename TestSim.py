@@ -171,13 +171,13 @@ def main():
     #s.runTime(60);
     s.helloServer(1, 3, "jherrera\r\n");
     s.runTime(80);
-    s.helloServer(1, 2, "jherr\r\n");
+    s.helloServer(1, 2, "atrebic\r\n");
     s.runTime(80);
     s.helloServer(1, 4, "kalex\r\n");
     s.runTime(80);
     s.broadCast(3, 1, "Hello World!\r\n");
     s.runTime(80);
-    s.whisper(1,"jherr ", "HI!\r\n");
+    s.whisper(1,"atrebic ", "HI!\r\n");
     #s.whisper(1,3, "HI!\r\n");
     s.runTime(80);
     #s.testServer(7);
