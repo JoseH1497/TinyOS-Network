@@ -782,7 +782,7 @@ implementation{
 	dbg(TRANSPORT_CHANNEL,"SIZE :%d\n", size);
 	
 	for(i = 0; i < sizeof(username); i++){
-		if(username[i+1+size] == '\r' || username[i+1+size] == '\n'){
+		if(username[i+1+size] == '\r' || username[i+1+size] == '\n' || username[i+1+size] == '?'){
 			break;
 		}
 		msg[i] = username[i+1+size];
