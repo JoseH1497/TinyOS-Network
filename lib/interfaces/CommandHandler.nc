@@ -12,6 +12,6 @@ interface CommandHandler{
    event void clientClose(int server, uint8_t *payload);
    event void helloServer(int client, uint8_t *payload);
    event void broadCastMessage(int server, uint8_t *payload);
-   event void whisper(uint8_t *username, uint8_t *payload);
+   event void whisper(uint8_t username, uint8_t *payload);
    
 }
