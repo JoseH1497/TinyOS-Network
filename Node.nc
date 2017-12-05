@@ -218,8 +218,17 @@ implementation{
 	    	 
 	    }else if(myMsg->protocol == SERVER_BROADCAST){
 	    	int forwardtoo;
+		int i;
 	    	if(myMsg->dest == TOS_NODE_ID){
 			dbg(TRANSPORT_CHANNEL,"Broadcast MESSAGED RECIEVED FROM CLIENT %d PAYLOAD: %s\n",myMsg->src, myMsg->payload);
+			for(i = 0; i < 256; i++){
+				if(nodePorts[i].hasClient == TRUE){
+					dbg(TRANSPORT_CHANNEL,"SENDING Broadcast MESSAGE TO %d on port %d\n",nodePorts[i].destAddr, nodePorts[i].destPort);
+					makePack(&sendPackage, TOS_NODE_ID, nodePorts[i].destAddr, MAX_TTL, serverSentBROADCAST, 55, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
+					forwardtoo = shortestPath(nodePorts[i].destAddr, TOS_NODE_ID);
+					call Sender.send(sendPackage, forwardtoo);
+				}
+			}
 		}else{
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
 			forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
@@ -227,6 +236,17 @@ implementation{
 		}
 	    
 	    
+	    
+	    }else if(myMsg->protocol == serverSentBROADCAST){
+	    	int forwardtoo;
+	    	if(myMsg->dest == TOS_NODE_ID){
+			dbg(TRANSPORT_CHANNEL,"Broadcast MESSAGED RECIEVED FROM Server %d PAYLOAD: %s\n",myMsg->src, myMsg->payload);
+		}else{
+			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
+			forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
+			call Sender.send(sendPackage, forwardtoo);
+		}
+		
 	    
 	    }
             else if (myMsg->protocol == PROTOCOL_PING) //pings
