@@ -802,10 +802,14 @@ implementation{
 	}
 	
     	
-	dbg(TRANSPORT_CHANNEL,"MSG:%s:\n", data);
+	//dbg(TRANSPORT_CHANNEL,"MSG:%s:\n", data);
 	dbg(TRANSPORT_CHANNEL,"MSGSIZE :%d\n", msgSize2);
+	for(i = 0; i < msgSize2; i++){
+		printf("%c ",data[i]);
+	}
+	printf("\n");
 	dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", user);
-	dbg(TRANSPORT_CHANNEL,"USERNAMESIZE :%d\n", sizeof(user));
+	//dbg(TRANSPORT_CHANNEL,"USERNAMESIZE :%d\n", sizeof(user));
 	if(msg != "HI!"){
 		//dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
 	}
