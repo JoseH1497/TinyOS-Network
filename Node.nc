@@ -240,7 +240,7 @@ implementation{
 	    }else if(myMsg->protocol == serverSentBROADCAST){
 	    	int forwardtoo;
 	    	if(myMsg->dest == TOS_NODE_ID){
-			dbg(TRANSPORT_CHANNEL,"Broadcast MESSAGED RECIEVED FROM Server %d PAYLOAD: %s\n",myMsg->src, myMsg->payload);
+			dbg(TRANSPORT_CHANNEL,"-----------Broadcast MESSAGED RECIEVED FROM Server %d PAYLOAD: %s------------\n",myMsg->src, myMsg->payload);
 		}else{
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
 			forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
