@@ -365,6 +365,7 @@ implementation{
                             nodePorts[freePort].lastSeq = newTCPPackage.seqNum;
                             nodePorts[freePort].nextSeq = newTCPPackage.ACK;
 			    memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
+			    dbg(TRANSPORT_CHANNEL,"payloadSERVER %s\n",newTCPPackage.payload);
                             //dbg(TRANSPORT_CHANNEL,"Server recieved SYN from client and is now sending SYN back to client\n");
                             //dbg(TRANSPORT_CHANNEL,"Server expects sequence number %d from Client %d on port %d\n", newTCPPackage.ACK, myMsg->src, freePort);
                             makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
@@ -389,6 +390,7 @@ implementation{
                                 newTCPPackage.srcPort = tcpPack->destPort;
                                 newTCPPackage.ACK = nodePorts[tcpPack->destPort].lastSeq + 1;
 				memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
+				dbg(TRANSPORT_CHANNEL,"payloadSERVER %s\n",newTCPPackage.payload);
                                 newTCPPackage.seqNum = nodePorts[tcpPack->destPort].lastSeq + 1;
                                 nodePorts[tcpPack->destPort].lastSeq = newTCPPackage.seqNum; //update sequence number
                                 newTCPPackage.flag = SYN;
