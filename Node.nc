@@ -792,6 +792,7 @@ implementation{
 		msg[i] = username[i+1+size];
 		
 	}
+	dbg(TRANSPORT_CHANNEL,"MSG:%s:\n", msg);
 	for(i = 0 ; i < msgSize; i++){
 		if(msg[i] == '?'){
 			break;
