@@ -777,8 +777,8 @@ implementation{
 			size++;
 		}
 	}
-	dbg(TRANSPORT_CHANNEL,"USERNAME : %s\n", username);
-	dbg(TRANSPORT_CHANNEL,"SIZE : %d\n", size);
+	dbg(TRANSPORT_CHANNEL,"USERNAME :%s\n", username);
+	dbg(TRANSPORT_CHANNEL,"SIZE :%d\n", size);
 	
 	for(i = 0; i < sizeof(username); i++){
 		msg[i] = username[i+2+size];
@@ -786,8 +786,8 @@ implementation{
 	
 	
     	
-	dbg(TRANSPORT_CHANNEL,"MSG : %s\n", msg);
-	dbg(TRANSPORT_CHANNEL,"USERNAME : %s\n", user);
+	dbg(TRANSPORT_CHANNEL,"MSG :%s\n", msg);
+	dbg(TRANSPORT_CHANNEL,"USERNAME :%s\n", user);
 	if(msg != "HI!"){
 		dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
 	}
