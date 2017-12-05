@@ -693,7 +693,7 @@ implementation{
 	
         forward = shortestPath(client, TOS_NODE_ID);
 	//dbg(TRANSPORT_CHANNEL,"Server forwarding to %d\n", forward);
-	dbg(GENERAL_CHANNEL, "Packet payload %s\n", sendPackage.payload);
+	//dbg(GENERAL_CHANNEL, "Packet payload %s\n", sendPackage.payload);
         call Sender.send(sendPackage, forward);
 
 
