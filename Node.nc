@@ -190,6 +190,9 @@ implementation{
 	    	int forwardtoo;
 	    	if(myMsg->dest == TOS_NODE_ID){
 		dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[myMsg->seq].username);
+		makePack(&sendPackage, myMsg->dest, myMsg->src, MAX_TTL, saveUSERNAME, nodePorts[myMsg->seq].destPort, &nodePorts[myMsg->seq].username, PACKET_MAX_PAYLOAD_SIZE);
+		forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
+		call Sender.send(sendPackage, forwardtoo);
 		}else{
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
 			forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
@@ -197,6 +200,9 @@ implementation{
 		}
 	    	
 	    
+	    }else if(myMsg->protocol == saveUSERNAME){
+	    	 memcpy(nodePorts[myMsg->seq].username, payload, sizeof(payload));
+		 dbg(TRANSPORT_CHANNEL, "SAVED USERNAME %s\n", nodePorts[myMsg->seq].username);
 	    }
             else if (myMsg->protocol == PROTOCOL_PING) //pings
             {
