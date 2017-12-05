@@ -765,9 +765,9 @@ implementation{
     }
     event void CommandHandler.whisperMessage(uint8_t *username, uint8_t *payload){
     	//makePack(&sendPackage, TOS_NODE_ID,0, MAX_TTL, 4, 1, payload, PACKET_MAX_PAYLOAD_SIZE);
-    	//dbg(TRANSPORT_CHANNEL,"payload : %s\n", sendPackage.payload);
-	makePack(&sendPackage, TOS_NODE_ID,0, MAX_TTL, 4, 1, username, PACKET_MAX_PAYLOAD_SIZE);
-    	dbg(TRANSPORT_CHANNEL,"USERNAME : %s\n", sendPackage.payload);
+    	dbg(TRANSPORT_CHANNEL,"payload : %s\n", payload);
+	//makePack(&sendPackage, TOS_NODE_ID,0, MAX_TTL, 4, 1, username, PACKET_MAX_PAYLOAD_SIZE);
+    	//dbg(TRANSPORT_CHANNEL,"USERNAME : %s\n", sendPackage.payload);
 	dbg(TRANSPORT_CHANNEL,"USERNAME : %s\n", username);
     }
     
