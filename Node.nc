@@ -765,12 +765,22 @@ implementation{
     }
     event void CommandHandler.whisperMessage(uint8_t *username, uint8_t *payload){
     	int i;
+	int size = 0;
 	char user[sizeof(username)];
 	for(i = 0; i < sizeof(username); i++){
 		user[i] = username[i];
 		dbg(TRANSPORT_CHANNEL,"USERNAME : %c\n", user[i]);
 	}
-	payload = user;
+	for(i = 0; i < sizeof(user); i++){
+		if(user[i] != '?'){
+			size++;
+		}
+	}
+	char userNamed[size];
+	for(i = 0; i < size; i++){
+		userNamed[i] = user[i];
+	}
+	payload = userNamed;
     	//makePack(&sendPackage, TOS_NODE_ID,0, MAX_TTL, 4, 1, payload, PACKET_MAX_PAYLOAD_SIZE);
     	dbg(TRANSPORT_CHANNEL,"payload : %s\n", payload);
 	//makePack(&sendPackage, TOS_NODE_ID,0, MAX_TTL, 4, 1, username, PACKET_MAX_PAYLOAD_SIZE);
