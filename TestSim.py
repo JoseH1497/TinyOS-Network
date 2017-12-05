@@ -17,6 +17,7 @@ class TestSim:
     CMD_CLIENT_CLOSE = 10
     CMD_HELLO_SERVER = 11
     CMD_BROADCAST = 12
+    CMD_WHISPER = 13
     # CHANNELS - see includes/channels.h
     COMMAND_CHANNEL="command";
     GENERAL_CHANNEL="general";
@@ -142,7 +143,10 @@ class TestSim:
         self.sendCMD(self.CMD_HELLO_SERVER, server, "{0}{1}".format(chr(client),msg));
     def broadCast(self, client, server, msg):
         self.sendCMD(self.CMD_BROADCAST, client,  "{0}{1}".format(chr(server),msg));
-
+    
+    def whisper(self, server, username, msg):
+        self.sendCMD(self.CMD_WHISPER, server, "{0}{1}".format(username,msg));
+    
 def main():
     s = TestSim();
     s.runTime(10);
@@ -173,6 +177,8 @@ def main():
     s.runTime(80);
     s.broadCast(3, 1, "Hello World!\r\n");
     s.runTime(80);
+    s.whisper(1,"jherrera", "HI!\r\n");
+    s.runtTime(80);
     #s.testServer(7);
     #s.runTime(20);
     #s.testServer(19);
