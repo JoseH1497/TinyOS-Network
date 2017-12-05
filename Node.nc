@@ -250,9 +250,14 @@ implementation{
 	    
 	    }else if(myMsg->protocol == WHISPER){
 	    
-	    	int forwardtoo;
+	    	int forwardtoo, i;
 	    	if(myMsg->dest == TOS_NODE_ID){
-			dbg(TRANSPORT_CHANNEL,"-----------WHISPER MESSAGED RECIEVED FROM Server %d PAYLOAD: %s------------\n",myMsg->src, myMsg->payload);
+			dbg(TRANSPORT_CHANNEL,"-----------WHISPER MESSAGED RECIEVED FROM Server %d PAYLOAD:------------\n",myMsg->src);
+			for(i = 0; i < myMsg->seq; i++){
+				printf("%c", myMsg->payload[i]);
+			
+			}
+			printf("\n");
 		}else{
 			dbg(TRANSPORT_CHANNEL,"-----------WHISPER MESSAGED\n");
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
