@@ -811,7 +811,7 @@ implementation{
 		printf("%c",data[i]);
 	}
 	printf("\n");
-	dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", user);
+	//dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", user);
 	
 	for(i = 0; i <256; i++){
 		if(nodePorts[i].hasClient == TRUE){
@@ -822,7 +822,7 @@ implementation{
 				}
 			}
 			if(count  == size){
-				dbg(TRANSPORT_CHANNEL,"Username %s currently connected to server on server port %d\n",nodePorts[i].username,i);
+				dbg(TRANSPORT_CHANNEL,"Username %s currently connected to server on server port %d\n",payload,i);
 				dbg(TRANSPORT_CHANNEL,"Username connected to server on client port %d to client %d\n",nodePorts[i].destPort,nodePorts[i].destAddr);
 				
 				
