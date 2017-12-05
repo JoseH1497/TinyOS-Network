@@ -248,6 +248,17 @@ implementation{
 		}
 		
 	    
+	    }else if(myMsg->protocol == WHISPER){
+	    
+	    	int forwardtoo;
+	    	if(myMsg->dest == TOS_NODE_ID){
+			dbg(TRANSPORT_CHANNEL,"-----------WHISPER MESSAGED RECIEVED FROM Server %d PAYLOAD: %s------------\n",myMsg->src, myMsg->payload);
+		}else{
+			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
+			forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
+			call Sender.send(sendPackage, forwardtoo);
+		}
+	    
 	    }
             else if (myMsg->protocol == PROTOCOL_PING) //pings
             {
@@ -770,6 +781,7 @@ implementation{
 	int msgSize2 = 0;
 	int count = 0;
 	int j;
+	int forwardto;
 	char user[sizeof(username)];
 	char msg[sizeof(username)];
 	char data[sizeof(username)];
@@ -825,7 +837,9 @@ implementation{
 					printf("%c",data[i]);
 				}
 				printf("\n");
-				
+				makePack(&sendPackage, TOS_NODE_ID,nodePorts[i].destAddr, MAX_TTL, WHISPER, msgSize2, (uint8_t*) data, msgSize2);
+				forwardto = shortestPath(nodePorts[i].destAddr, TOS_NODE_ID);
+				call Sender.send(sendPackage, forwardto);
 				break;
 			}
 			count = 0;
