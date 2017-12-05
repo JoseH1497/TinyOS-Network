@@ -205,6 +205,8 @@ implementation{
 	    	if(myMsg->dest == TOS_NODE_ID){
 			nodePorts[myMsg->seq].hasClient = TRUE;
 			nodePorts[myMsg->seq].state = ESTABLISHED;
+			
+			
 			memcpy(nodePorts[myMsg->seq].username, myMsg->payload, sizeof(myMsg->payload));
 			//dbg(TRANSPORT_CHANNEL, "PORT %d\n", myMsg->seq);
 		 	//dbg(TRANSPORT_CHANNEL, "SAVED USERNAME %s\n", nodePorts[myMsg->seq].username);
@@ -445,7 +447,10 @@ implementation{
                             dbg(TRANSPORT_CHANNEL,"Server:%d Port: %d\n", TOS_NODE_ID, tcpPack->destPort);
 			    
                             if(tcpPack->payload != "TestClient" || tcpPack->payload != "closeClient"){
-			    	
+			    	nodePorts[tcpPack->destPort].destAddr = myMsg->src;
+                            	nodePorts[tcpPack->destPort].destPort =  tcpPack->srcPort;
+				nodePorts[tcpPack->destPort].srcPort = tcpPack->destPort;
+                            	nodePorts[tcpPack->destPort].state = ESTABLISHED;
 				makePack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, getUSERNAME, tcpPack->srcPort, &myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
                                 //dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[tcpPack->destPort].username);
 				forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
