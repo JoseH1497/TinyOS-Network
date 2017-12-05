@@ -770,13 +770,16 @@ implementation{
 	char msg[sizeof(username)];
 	for(i = 0; i < sizeof(username); i++){
 		user[i] = username[i];
+		if(user[i] == ' '){
+			break;
+		}
 		
 	}
 	for(i = 0; i < sizeof(user); i++){
-		if(user[i] != ' '){
+		if(user[i] != '\n' || user[i] != '\0'){
 			size++;
 		}
-		if(user[i] == ' '){
+		if(user[i] != '\n' || user[i] != '\0'){
 			break;
 		}
 	}
@@ -785,6 +788,9 @@ implementation{
 	
 	for(i = 0; i < sizeof(username); i++){
 		msg[i] = username[i+1+size];
+		if(username[i+1+size] == '\r'){
+			break;
+		}
 	}
 	
 	
