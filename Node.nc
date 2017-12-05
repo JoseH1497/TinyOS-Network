@@ -770,8 +770,9 @@ implementation{
 		user[i] = username[i];
 		dbg(TRANSPORT_CHANNEL,"USERNAME : %c\n", user[i]);
 	}
+	payload = user;
     	//makePack(&sendPackage, TOS_NODE_ID,0, MAX_TTL, 4, 1, payload, PACKET_MAX_PAYLOAD_SIZE);
-    	//dbg(TRANSPORT_CHANNEL,"payload : %s\n", payload);
+    	dbg(TRANSPORT_CHANNEL,"payload : %s\n", payload);
 	//makePack(&sendPackage, TOS_NODE_ID,0, MAX_TTL, 4, 1, username, PACKET_MAX_PAYLOAD_SIZE);
     	//dbg(TRANSPORT_CHANNEL,"PAY : %s\n", sendPackage.payload);
 	dbg(TRANSPORT_CHANNEL,"USERNAME : %s\n", user);
