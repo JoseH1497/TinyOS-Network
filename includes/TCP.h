@@ -63,7 +63,7 @@ typedef struct socket_t{
         uint8_t srcPort;
         char sentData[128]; //buffer size = 128
         
-        uint8_t srcAddr;
+        int srcAddr;
         char recievedData[128];
         uint8_t destPort;
         uint8_t destAddr;
@@ -95,7 +95,7 @@ typedef struct socket_addr_t{
 
 typedef struct Port{
         bool open;
-        uint16_t destAddr;
+        int destAddr;
         int destPort;
         int portNumber;
         uint16_t lastSeq;
