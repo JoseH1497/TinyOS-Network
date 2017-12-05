@@ -777,6 +777,7 @@ implementation{
 		}
 	}
 	dbg(TRANSPORT_CHANNEL,"USERNAME : %s\n", username);
+	dbg(TRANSPORT_CHANNEL,"SIZE : %d\n", size);
 	//for(i = 0; i < size; i++){
 	//	userNamed[i] = user[i];
 	//}
