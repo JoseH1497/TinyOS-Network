@@ -154,8 +154,8 @@ def main():
     s.addChannel(s.TRANSPORT_CHANNEL);
 
     s.runTime(200);
-    s.testServer(1);
-    s.runTime(40);
+    #s.testServer(1);
+    #s.runTime(40);
     #s.testServer(1);
     #s.runTime(40);
     #s.testClient(2, 1, "testClient");
