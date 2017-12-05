@@ -650,7 +650,9 @@ implementation{
         nodePorts[41].state = LISTENING_SERVER;
         dbg(TRANSPORT_CHANNEL,"Server listening on port 41\n");
         makePack(&sendPackage, TOS_NODE_ID, client, MAX_TTL, HELLO, 0, payload,PACKET_MAX_PAYLOAD_SIZE);
+	
         forward = shortestPath(client, TOS_NODE_ID);
+	dbg(TRANSPORT_CHANNEL,"Server forwarding to %d\n", forward);
         call Sender.send(sendPackage, forward);
 
 
