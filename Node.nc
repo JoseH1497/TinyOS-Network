@@ -769,7 +769,7 @@ implementation{
 	char user[sizeof(username)];
 	char msg[sizeof(username)];
 	for(i = 0; i < sizeof(username); i++){
-		if(user[i] == ' '){
+		if(username[i] == ' '){
 			break;
 		}
 		size++;
