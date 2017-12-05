@@ -161,10 +161,9 @@ def main():
     s.addChannel(s.TRANSPORT_CHANNEL);
 
     s.runTime(200);
-    for j in range(1, s.numMote+1):
-            s.routeDMP(j);
-            s.runTime(100);
-            print("\n")
+    
+    s.routeDMP(1);
+    s.runTime(100);
     #s.testServer(1);
     #s.runTime(40);
     #s.testServer(1);
