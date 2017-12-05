@@ -98,7 +98,7 @@ typedef struct Port{
         uint16_t lastSeq;
         uint16_t nextSeq;
         int srcPort;
-        bool hasClient = 0;
+        bool hasClient;
         uint16_t state;
         char recievedData[128];
         char sentData[128];
