@@ -822,7 +822,7 @@ implementation{
 				}
 			}
 			if(count  == size){
-				dbg(TRANSPORT_CHANNEL,"Username %s currently connected to server on server port %d\n",payload,i);
+				dbg(TRANSPORT_CHANNEL,"Username %s currently connected to server on server port %d\n",user,i);
 				dbg(TRANSPORT_CHANNEL,"Username connected to server on client port %d to client %d\n",nodePorts[i].destPort,nodePorts[i].destAddr);
 				
 				
