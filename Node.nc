@@ -128,8 +128,10 @@ implementation{
 
         if(len==sizeof(pack)){
             pack* myMsg=(pack*) payload;
-            dbg(GENERAL_CHANNEL, "Packet received from %d\n",myMsg->src);
-            
+            //dbg(GENERAL_CHANNEL, "Packet received from %d\n",myMsg->src);
+            if(myMsg->protocol == HELLO){
+	    	dbg(GENERAL_CHANNEL, "Packet received from %d\n",myMsg->src);
+	    }
             //dbg(FLOODING_CHANNEL, "Packet being flooded to %d\n",myMsg->dest);
             
             if (!call Hash.contains(myMsg->src))
