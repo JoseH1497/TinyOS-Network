@@ -770,7 +770,7 @@ implementation{
 	char msg[sizeof(username)];
 	for(i = 0; i < sizeof(username); i++){
 		user[i] = username[i];
-		//dbg(TRANSPORT_CHANNEL,"USERNAME : %c\n", user[i]);
+		
 	}
 	for(i = 0; i < sizeof(user); i++){
 		if(user[i] != '?'){
@@ -783,14 +783,17 @@ implementation{
 	for(i = 0; i < sizeof(username); i++){
 		msg[i] = username[i+2+size];
 	}
-	//payload = userNamed;
 	
-    	//makePack(&sendPackage, TOS_NODE_ID,0, MAX_TTL, 4, 1, (uint8_t *)user, size);
-    	//dbg(TRANSPORT_CHANNEL,"payload : %s\n", sendPackage.payload);
-	//makePack(&sendPackage, TOS_NODE_ID,0, MAX_TTL, 4, 1, username, PACKET_MAX_PAYLOAD_SIZE);
-    	//dbg(TRANSPORT_CHANNEL,"PAY : %s\n", sendPackage.payload);
+	
+    	
 	dbg(TRANSPORT_CHANNEL,"MSG : %s\n", msg);
 	dbg(TRANSPORT_CHANNEL,"USERNAME : %s\n", user);
+	if(msg != "HI!"){
+		dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
+	}
+	if(user != "jherrera"){
+		dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
+	}
     }
     
     void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, int seq, uint8_t* payload, uint8_t length){
