@@ -410,7 +410,7 @@ implementation{
                              dbg(TRANSPORT_CHANNEL,"Client:%d Port: %d\n", myMsg->src, tcpPack->srcPort);
                              dbg(TRANSPORT_CHANNEL,"Server:%d Port: %d\n", TOS_NODE_ID, tcpPack->destPort);
                             if(tcpPack->payload != "TestClient" || tcpPack->payload != "closeClient"){
-                                dbg(TRANSPORT_CHANNEL, "Hello %d\n", tcpPack->payload);
+                                dbg(TRANSPORT_CHANNEL, "Hello %s\n", tcpPack->payload);
                             }
                             nodePorts[tcpPack->destPort].destAddr = myMsg->src;
                             nodePorts[tcpPack->destPort].destPort =  tcpPack->srcPort;
@@ -657,8 +657,8 @@ implementation{
         makePack(&sendPackage, TOS_NODE_ID, client, MAX_TTL, HELLO, 0, payload,PACKET_MAX_PAYLOAD_SIZE);
 	
         forward = shortestPath(client, TOS_NODE_ID);
-	dbg(TRANSPORT_CHANNEL,"Server forwarding to %d\n", forward);
-	dbg(GENERAL_CHANNEL, "Packet PROTOCOL %d\n", sendPackage.protocol);
+	//dbg(TRANSPORT_CHANNEL,"Server forwarding to %d\n", forward);
+	//dbg(GENERAL_CHANNEL, "Packet PROTOCOL %d\n", sendPackage.protocol);
         call Sender.send(sendPackage, forward);
 
 
