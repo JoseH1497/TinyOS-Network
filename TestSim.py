@@ -18,6 +18,7 @@ class TestSim:
     CMD_HELLO_SERVER = 11
     CMD_BROADCAST = 12
     CMD_WHISPER = 7
+    CMD_PRINT_USERS = 13
     # CHANNELS - see includes/channels.h
     COMMAND_CHANNEL="command";
     GENERAL_CHANNEL="general";
@@ -147,6 +148,9 @@ class TestSim:
     def whisper(self, server, username, msg):
         self.sendCMD(self.CMD_WHISPER, server, "{0}{1}".format(username,msg));
     
+    def listusr(self, client, server, msg):
+        self.sendCMD(self.CMD_PRINT_USERS, client, "{0}{1}".format(chr(server),msg))
+    
 def main():
     s = TestSim();
     s.runTime(10);
@@ -182,6 +186,8 @@ def main():
     s.runTime(80);
     s.whisper(1,"atrebic ", "HELLO!\r\n");
     #s.whisper(1,3, "HI!\r\n");
+    s.runTime(80);
+    s.listusr(3, 1, "listusr\r\n");
     s.runTime(80);
     #s.testServer(7);
     #s.runTime(20);
