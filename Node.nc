@@ -252,7 +252,7 @@ implementation{
 	    
 	    	int forwardtoo, i;
 	    	if(myMsg->dest == TOS_NODE_ID){
-			dbg(TRANSPORT_CHANNEL,"-----------WHISPER MESSAGED RECIEVED FROM Server %d PAYLOAD:------------\n",myMsg->src);
+			dbg(TRANSPORT_CHANNEL,"-----------WHISPER MESSAGED RECIEVED FROM Server %d PAYLOAD: ",myMsg->src);
 			for(i = 0; i < myMsg->seq; i++){
 				printf("%c", myMsg->payload[i]);
 			
@@ -787,6 +787,7 @@ implementation{
 	int msgSize2 = 0;
 	int count = 0;
 	int j;
+	uint16_t destination;
 	int forwardto;
 	char user[sizeof(username)];
 	char msg[sizeof(username)];
@@ -843,10 +844,12 @@ implementation{
 					printf("%c",data[i]);
 				}
 				printf("\n");
+				destination =nodePorts[i].destAddr;
+				dbg(TRANSPORT_CHANNEL,"Sending data TO CLIENT %d:\n", destination);
 				makePack(&sendPackage, TOS_NODE_ID,2, MAX_TTL, WHISPER, msgSize2, (uint8_t*) data, msgSize2);
 				forwardto = shortestPath((int) nodePorts[i].destAddr, TOS_NODE_ID);
 				dbg(TRANSPORT_CHANNEL,"Forwarding to %d \n", forwardto);
-				call Sender.send(sendPackage, 2);
+				call Sender.send(sendPackage, AM_BROADCAST_ADDR);
 				break;
 			}
 			count = 0;
