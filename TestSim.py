@@ -156,12 +156,12 @@ def main():
     s.runTime(200);
     s.testServer(1);
     s.runTime(40);
-    s.testServer(1);
-    s.runTime(40);
-    s.testClient(2, 1, "testClient");
-    s.runTime(40);
-    s.closeClient(2,1, "closeClient");
-    s.runTime(60);
+    #s.testServer(1);
+    #s.runTime(40);
+    #s.testClient(2, 1, "testClient");
+    #s.runTime(40);
+    #s.closeClient(2,1, "closeClient");
+    #s.runTime(60);
     s.helloServer(1, 3, "jherrera\r\n");
     s.runTime(80);
     #s.testServer(7);
