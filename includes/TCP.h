@@ -24,6 +24,7 @@ enum{
     getUSERNAME = 220,
     saveUSERNAME = 221,
     SERVER_BROADCAST = 219,
+    serverSentBROADCAST = 218,
 
 
     //Flags
