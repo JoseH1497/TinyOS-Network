@@ -766,8 +766,11 @@ implementation{
     event void CommandHandler.whisperMessage(uint8_t *username, uint8_t *payload){
     	int i;
 	int size = 0;
+	int msgSize = 0;
+	int msgSize2 = 0;
 	char user[sizeof(username)];
 	char msg[sizeof(username)];
+	char data[sizeof(username)];
 	for(i = 0; i < sizeof(username); i++){
 		if(username[i] == ' '){
 			break;
@@ -785,21 +788,28 @@ implementation{
 		if(username[i+1+size] == '\r' || username[i+1+size] == '\n' || username[i+1+size] == '?'){
 			break;
 		}
+		msgSize++;
 		msg[i] = username[i+1+size];
 		
 	}
-	
+	for(int i = 0 ; i < msgSize; i++){
+		if(msg[i] == '?'){
+			break;
+		}
+		msgSize2++;
+		data[i] ==msg[i]; 
+	}
 	
     	
-	dbg(TRANSPORT_CHANNEL,"MSG:%s:\n", msg);
-	dbg(TRANSPORT_CHANNEL,"MSGSIZE :%d\n", sizeof(msg));
+	dbg(TRANSPORT_CHANNEL,"MSG:%s:\n", data);
+	dbg(TRANSPORT_CHANNEL,"MSGSIZE :%d\n", msgSize2);
 	dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", user);
 	dbg(TRANSPORT_CHANNEL,"USERNAMESIZE :%d\n", sizeof(user));
 	if(msg != "HI!"){
-		dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
+		//dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
 	}
 	if(user != "jherr"){
-		dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
+		//dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
 	}
     }
     
