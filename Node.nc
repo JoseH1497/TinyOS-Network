@@ -787,7 +787,9 @@ implementation{
 	
     	
 	dbg(TRANSPORT_CHANNEL,"MSG :%s\n", msg);
+	dbg(TRANSPORT_CHANNEL,"MSGSIZE :%d\n", sizeof(msg));
 	dbg(TRANSPORT_CHANNEL,"USERNAME :%s\n", user);
+	dbg(TRANSPORT_CHANNEL,"USERNAMESIZE :%d\n", sizeof(user));
 	if(msg != "HI!"){
 		dbg(TRANSPORT_CHANNEL,"NOPEMSG : \n");
 	}
