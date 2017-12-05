@@ -265,6 +265,20 @@ implementation{
 			call Sender.send(sendPackage, forwardtoo);
 		}
 	    
+	    }else if(myMsg->protocol == requestList){
+	    	int nxt;
+	    	if(myMsg->dest == TOS_NODE_ID){
+			dbg(TRANSPORT_CHANNEL,"Client %d is requesting list of current connect users!\n",myMsg->src);
+	    
+		}else{
+			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
+			nxt = shortestPath(myMsg->dest, TOS_NODE_ID);
+			call Sender.send(sendPackage, nxt);
+		}
+		
+		
+	    	
+	    
 	    }
             else if (myMsg->protocol == PROTOCOL_PING) //pings
             {
@@ -858,7 +872,14 @@ implementation{
 	}
 	
     }
-    
+    event void CommandHandler.listUsers(int server, uint8_t *payload){
+    		int forward;
+    		dbg(TRANSPORT_CHANNEL,"-------Requesting list of users from server 1------\n ");
+		makePack(&sendPackage, TOS_NODE_ID, server, MAX_TTL, requestList, 0, payload, sizeof(payload));
+		
+    		forward = shortestPath(server, TOS_NODE_ID);
+		call Sender.send(sendPackage, forward);
+    }
     void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, int seq, uint8_t* payload, uint8_t length){
         Package->src = src;
         Package->dest = dest;
