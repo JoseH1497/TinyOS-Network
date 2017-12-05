@@ -163,7 +163,7 @@ def main():
     #s.closeClient(2,1, "closeClient");
     #s.runTime(60);
     s.helloServer(1, 3, "jherrera\r\n");
-    s.runTime(80);
+    s.runTime(200);
     #s.testServer(7);
     #s.runTime(20);
     #s.testServer(19);
