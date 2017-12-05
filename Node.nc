@@ -767,6 +767,7 @@ implementation{
     	int i;
 	int size = 0;
 	char user[sizeof(username)];
+	char msg[sizeof(username)];
 	for(i = 0; i < sizeof(username); i++){
 		user[i] = username[i];
 		//dbg(TRANSPORT_CHANNEL,"USERNAME : %c\n", user[i]);
@@ -778,15 +779,17 @@ implementation{
 	}
 	dbg(TRANSPORT_CHANNEL,"USERNAME : %s\n", username);
 	dbg(TRANSPORT_CHANNEL,"SIZE : %d\n", size);
-	//for(i = 0; i < size; i++){
-	//	userNamed[i] = user[i];
-	//}
+	
+	for(i = 0; i < sizeof(username); i++){
+		msg[i] = username[i+1+size];
+	}
 	//payload = userNamed;
 	
     	//makePack(&sendPackage, TOS_NODE_ID,0, MAX_TTL, 4, 1, (uint8_t *)user, size);
     	//dbg(TRANSPORT_CHANNEL,"payload : %s\n", sendPackage.payload);
 	//makePack(&sendPackage, TOS_NODE_ID,0, MAX_TTL, 4, 1, username, PACKET_MAX_PAYLOAD_SIZE);
     	//dbg(TRANSPORT_CHANNEL,"PAY : %s\n", sendPackage.payload);
+	dbg(TRANSPORT_CHANNEL,"MSG : %s\n", msg);
 	dbg(TRANSPORT_CHANNEL,"USERNAME : %s\n", user);
     }
     
