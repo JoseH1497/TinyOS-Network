@@ -177,7 +177,7 @@ def main():
     s.runTime(80);
     s.broadCast(3, 1, "Hello World!\r\n");
     s.runTime(80);
-    s.whisper(1,"jherrera", "HI!\r\n");
+    s.whisper(1,"jherrera\r\n", "HI!\r\n");
     #s.whisper(1,3, "HI!\r\n");
     s.runTime(80);
     #s.testServer(7);
