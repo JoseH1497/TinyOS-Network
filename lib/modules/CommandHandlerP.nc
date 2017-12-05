@@ -81,6 +81,10 @@ implementation{
                 dbg(COMMAND_CHANNEL,"Command Type: Client Close\n");
                 signal CommandHandler.clientClose(buff[0], &buff[1]);
                 break;
+            case CMD_HELLO_SERVER:
+                dbg(COMMAND_CHANNEL, "Command: Hello\n");
+                signal CommandHandler.helloServer(buff[0], &buff[1]);
+                break;
             default:
                 dbg(COMMAND_CHANNEL, "CMD_ERROR: \"%d\" does not match any known commands.\n", msg->id);
                 break;
@@ -101,3 +105,4 @@ implementation{
         return raw_msg;
     }
 }
+
