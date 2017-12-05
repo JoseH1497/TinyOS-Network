@@ -548,9 +548,12 @@ implementation{
 
 
                 }else{
-
-                    //forward packet
-		    dbg(TRANSPORT_CHANNEL,"payloadNotMines %s\n",myMsg->payload.payload);
+				
+		    TCP *tcpPack = (TCP*) myMsg->payload;
+		    
+                    
+                  
+		    dbg(TRANSPORT_CHANNEL,"payloadNotMines %s\n",tcpPack->payload);
                     makeTCPPack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL - 1, myMsg->protocol, myMsg->seq, &myMsg->payload, sizeof(myMsg->payload));
                     forwardPackage = shortestPath(myMsg->dest,TOS_NODE_ID);
                     //dbg(TRANSPORT_CHANNEL,"TCP packet meant for %d, forwarding to %d\n",myMsg->dest, forwardPackage);
