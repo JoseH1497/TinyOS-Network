@@ -86,6 +86,7 @@ implementation{
     int getBufferSpaceAvail(Port nodePorts[], int sourcePort);
     void makeTCPPack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, int seq, TCP* payload, uint8_t length);
     //bool bind()
+    void TestClient2(int server, uint8_t * payload);
     socket_t SendBuffer[128];
     char RecieveBuffer[128];
 
@@ -173,7 +174,7 @@ implementation{
                 if(myMsg->dest == TOS_NODE_ID){
                     
                     dbg(TRANSPORT_CHANNEL,"ATTEMPTING TO ESTABLISH CONNECTION TO SERVER %d\n",myMsg->src);
-                    TestClient(myMsg->src, myMsg->payload);
+                    TestClient2(myMsg->src, myMsg->payload);
 
                 }else{
 			
@@ -460,7 +461,7 @@ implementation{
                 
             }else if(myMsg->protocol == PROTOCOL_TCP){
                 int forwardPackage;
-		int freePort;
+		        int freePort;
                 if(myMsg->dest == TOS_NODE_ID){
                     TCP *tcpPack = (TCP*) myMsg->payload;
                     TCP newTCPPackage;
@@ -493,6 +494,36 @@ implementation{
                             call Sender.send(sendPackage, forwardPackage);
 
                         }
+
+                    }else if(tcpPack->flag == HELLO_SYN){
+                            freePort = freeServerPort(); 
+                        if(freePort != -1){
+                            dbg(TRANSPORT_CHANNEL,"Binding client %d with client port %d to Server port %d\n", myMsg->src, tcpPack->srcPort, freePort);
+                            nodePorts[freePort].open = FALSE; //not an open port anymore
+                            nodePorts[freePort].destAddr = myMsg->src; //port only accepting connections from this address 
+                            nodePorts[freePort].destPort = tcpPack->srcPort; //port only accepts data from destAddr and clients port 
+                            nodePorts[freePort].srcPort = freePort; //port used for this connection
+				
+                            //SERVER sends SYN packet back with ACK = tcpPack->seqNum + 1 => sequence number server expects back and with its own sequence number 
+                            newTCPPackage.srcPort = freePort; 
+                            newTCPPackage.destPort = tcpPack->srcPort;
+                            newTCPPackage.flag = SYN_SERVER; //Denotes SYN from SERVER
+                            newTCPPackage.ACK = tcpPack->seqNum + 1; //expect this sequence number back from client
+                            newTCPPackage.seqNum = (uint16_t) ((call Random.rand16())%256);
+                            nodePorts[freePort].lastSeq = newTCPPackage.seqNum;
+                            nodePorts[freePort].nextSeq = newTCPPackage.ACK;
+                            nodePorts[freePort].state = HELLO_SYN_RCVD;
+			                memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
+			                memcpy(nodePorts[freePort].username, tcpPack->payload, sizeof(tcpPack->payload));
+			                //dbg(TRANSPORT_CHANNEL,"payloadSERVER %s\n",newTCPPackage.payload);
+                            //dbg(TRANSPORT_CHANNEL,"Server recieved SYN from client and is now sending SYN back to client\n");
+                            //dbg(TRANSPORT_CHANNEL,"Server expects sequence number %d from Client %d on port %d\n", newTCPPackage.ACK, myMsg->src, freePort);
+                            makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
+                            forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
+                            call Sender.send(sendPackage, forwardPackage);
+
+                        }
+
 
                     }else if(tcpPack->flag == SYN_SERVER){
                         
@@ -1273,13 +1304,7 @@ implementation{
             tcpPackage.srcPort = openPort;
             memcpy(tcpPackage.payload, payload, sizeof(payload));
 	        memcpy(nodePorts[openPort].username, payload, sizeof(payload));
-            if(tcpPackage.payload == ' '){
-
-            }else{
-                dbg(TRANSPORT_CHANNEL,"Client PAYLOAD :%s:\n", tcpPackage.payload);
-                dbg(TRANSPORT_CHANNEL,"SIZE CLIENT PAYLOAD :%d:\n", sizeof(tcpPackage.payload));
-
-            }
+            
 	        
             tcpPackage.seqNum = (uint16_t) ((call Random.rand16())%256);// get random starting sequence number for connection
             tcpPackage.flag = SYN_CLIENT;
@@ -1295,7 +1320,42 @@ implementation{
             dbg(TRANSPORT_CHANNEL,"NO PORTS AVAILABLE to use for connection\n");
         }
     }
-    	
+    void TestClient2(int server, uint8_t * payload){
+        TCP tcpPackage;
+        int openPort;
+        int nextPlace;
+        dbg(TRANSPORT_CHANNEL, "-------Attempting to connect to SERVER %d-------\n",server);  
+        openPort = getFreePort();
+        if(openPort != -1){
+            dbg(TRANSPORT_CHANNEL,"Client using port %d for connection\n", openPort);
+            //bind(sockets, fd, openPort); //bind to socket
+            nodePorts[openPort].state = SYN_SENT; //port knows it sent an SYN and thus knows port is being used as a client 
+            nodePorts[openPort].srcPort = openPort;
+            tcpPackage.srcPort = openPort;
+            memcpy(tcpPackage.payload, payload, sizeof(payload));
+	        memcpy(nodePorts[openPort].username, payload, sizeof(payload));
+            if(tcpPackage.payload == ' '){
+
+            }else{
+                dbg(TRANSPORT_CHANNEL,"Client PAYLOAD :%s:\n", tcpPackage.payload);
+                dbg(TRANSPORT_CHANNEL,"SIZE CLIENT PAYLOAD :%d:\n", sizeof(tcpPackage.payload));
+
+            }
+	        
+            tcpPackage.seqNum = (uint16_t) ((call Random.rand16())%256);// get random starting sequence number for connection
+            tcpPackage.flag = HELLO_SYN;
+            nodePorts[openPort].lastSeq = tcpPackage.seqNum;
+            nodePorts[openPort].sizeofPayload = sizeof(payload);
+            makeTCPPack(&sendPackage, TOS_NODE_ID, server, MAX_TTL, PROTOCOL_TCP, seqNum, &tcpPackage, sizeof(tcpPackage));
+            seqNum++;
+            nextPlace = shortestPath(server, TOS_NODE_ID);
+            dbg(TRANSPORT_CHANNEL,"------------Sending SYN Packet to Server %d with sequence number %d.. forwarding to %d-----------\n", server, tcpPackage.seqNum,nextPlace);
+            call Sender.send(sendPackage, nextPlace);
+        }else{
+
+            dbg(TRANSPORT_CHANNEL,"NO PORTS AVAILABLE to use for connection\n");
+        }
+    }	
     void initPorts(){
         int i, j;
         //open all ports

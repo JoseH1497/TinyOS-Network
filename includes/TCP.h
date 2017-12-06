@@ -28,7 +28,9 @@ enum{
     WHISPER = 217,
     requestList = 215,
     sentList =214,
-        
+    HELLO_SYN = 211,
+    HELLO_SYN_RCVD= 209,
+
 
 
     //Flags
