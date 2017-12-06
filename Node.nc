@@ -308,7 +308,7 @@ implementation{
             //if(checkPacket(sendPackage)){
 
             //}else{
-                printf("list %d: %s\n ",myMsg->seq, myMsg->payload);
+                printf("%d: %s\n ",myMsg->seq, myMsg->payload);
             
             //}
 			
