@@ -271,7 +271,7 @@ implementation{
 	    }else if(myMsg->protocol == requestList){
 	    	int nxt, i;
 
-            int listNumbers = 0;
+            int listNumbers = 1;
 	    	if(myMsg->dest == TOS_NODE_ID){
                 //if(checkPacket(sendPackage)){
 
@@ -286,7 +286,7 @@ implementation{
 					    call Sender.send(sendPackage, AM_BROADCAST_ADDR);
 				}
 			}
-            listNumbers = 0;
+            listNumbers = 1;
             //}
 
 			
