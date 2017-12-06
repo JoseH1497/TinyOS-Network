@@ -292,7 +292,7 @@ implementation{
 	    
 	    }else if(myMsg->protocol == sentList){
 	    	int nextTo;
-		dbg("TRANSPORT_CHANNEL"," ");
+		dbg("TRANSPORT_CHANNEL","hello");
 		if(myMsg->dest == TOS_NODE_ID){
 			printf("%d: %s\n ",listNum, myMsg->payload);
 			listNum++;
