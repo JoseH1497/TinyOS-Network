@@ -1273,10 +1273,10 @@ implementation{
             tcpPackage.srcPort = openPort;
             memcpy(tcpPackage.payload, payload, sizeof(payload));
 	        memcpy(nodePorts[openPort].username, payload, sizeof(payload));
-            if(tcpPackage.payload == " "){
+            if(tcpPackage.payload == ' '){
 
             }else{
-                dbg(TRANSPORT_CHANNEL,"Client PAYLOAD %s\n", tcpPackage.payload);
+                dbg(TRANSPORT_CHANNEL,"Client PAYLOAD :%s:\n", tcpPackage.payload);
 
             }
 	        
