@@ -888,8 +888,8 @@ implementation{
 		
 	}
 	
-	dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", username);
-	dbg(TRANSPORT_CHANNEL,"SIZE :%d\n", size);
+	//dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", username);
+	//dbg(TRANSPORT_CHANNEL,"SIZE :%d\n", size);
 	
 	for(i = 0; i < sizeof(username); i++){
 		if(username[i+1+size] == '\r' || username[i+1+size] == '\n' || username[i+1+size] == '?'){
@@ -899,7 +899,7 @@ implementation{
 		msg[i] = username[i+1+size];
 		
 	}
-	dbg(TRANSPORT_CHANNEL,"MSG:%s:\n", msg);
+	//dbg(TRANSPORT_CHANNEL,"MSG:%s:\n", msg);
 	for(i = 0 ; i < msgSize; i++){
 		if(msg[i] == '?'){
 			break;
@@ -910,7 +910,7 @@ implementation{
 	
     	
 	//dbg(TRANSPORT_CHANNEL,"MSG:%s:\n", data);
-	dbg(TRANSPORT_CHANNEL,"MSGSIZE :%d\n", msgSize2);
+	//dbg(TRANSPORT_CHANNEL,"MSGSIZE :%d\n", msgSize2);
 	
 	//dbg(TRANSPORT_CHANNEL,"USERNAME :%s:\n", user);
 	
