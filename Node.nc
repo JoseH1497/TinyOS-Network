@@ -539,7 +539,7 @@ implementation{
 				                nodePorts[tcpPack->destPort].srcPort = tcpPack->destPort;
                             	nodePorts[tcpPack->destPort].state = ESTABLISHED;
 				                makePack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, getUSERNAME, tcpPack->srcPort, &myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
-                                //dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[tcpPack->destPort].username);
+                                dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[tcpPack->destPort].username);
 				                forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
                                 call Sender.send(sendPackage, forwardPackage);
 				
@@ -563,7 +563,7 @@ implementation{
                                 forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
                                 call Sender.send(sendPackage, forwardPackage);
 			     
-			     }
+			                }
                             
 
 
