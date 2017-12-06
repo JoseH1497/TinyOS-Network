@@ -1448,7 +1448,7 @@ implementation{
     int getBufferSpaceAvail(Port nodePorts[], int sourcePort){
         int sizeAvail = 0;
         int i =0;
-        for(i = 0; i < 128; i++){
+        for(i = 0; i < BUFFERSIZE; i++){
             if(nodePorts[sourcePort].recievedData[i] == '-' ){
                 sizeAvail++;
             }
