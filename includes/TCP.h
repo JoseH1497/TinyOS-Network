@@ -58,6 +58,7 @@ typedef nx_struct TCP{
         nx_uint8_t doneSending;
         nx_uint8_t payload[PACKET_MAX_PAYLOAD_SIZE];
         
+        
 
 }TCP;
 

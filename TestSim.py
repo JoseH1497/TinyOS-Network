@@ -166,7 +166,7 @@ def main():
 
     s.runTime(200);
     
-    s.routeDMP(1);
+    #s.routeDMP(1);
     s.runTime(100);
     s.testServer(1);
     s.runTime(40);
