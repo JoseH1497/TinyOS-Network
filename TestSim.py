@@ -191,7 +191,7 @@ def main():
     s.runTime(80);
     s.listusr(2, 1, "listusr\r\n");
     s.runTime(80);
-    s.listusr(3,1, "listusr\r\n");
+    #s.listusr(3,1, "listusr\r\n");
     s.runTime(80);
     #s.testServer(7);
     #s.runTime(20);

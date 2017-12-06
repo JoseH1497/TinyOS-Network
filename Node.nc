@@ -273,9 +273,9 @@ implementation{
 
             int listNumbers = 0;
 	    	if(myMsg->dest == TOS_NODE_ID){
-                if(checkPacket(sendPackage)){
+                //if(checkPacket(sendPackage)){
 
-                }else{
+                //}else{
                     dbg(TRANSPORT_CHANNEL,"Client %d is requesting list of current connected users!\n",myMsg->src);
 			        for(i = 0; i < 256;  i++){
 				    if(nodePorts[i].hasClient == TRUE){
@@ -287,7 +287,7 @@ implementation{
 				}
 			}
             listNumbers = 0;
-            }
+            //}
 
 			
 	    
@@ -305,12 +305,12 @@ implementation{
 	    	int nextTo;
 		    dbg(TRANSPORT_CHANNEL," ");
 		if(myMsg->dest == TOS_NODE_ID){
-            if(checkPacket(sendPackage)){
+            //if(checkPacket(sendPackage)){
 
-            }else{
+            //}else{
                 printf("list %d: %s\n ",myMsg->seq, myMsg->payload);
-            }
-			
+            
+            //}
 			
 		
 		}else{
@@ -1027,9 +1027,9 @@ implementation{
                 for(i = 0; i < size; i++){
                     PacketMatch = call SeenPackList.get(i);
                     if( (PacketMatch.protocol == Packet.protocol)&&(PacketMatch.src == Packet.src) && (PacketMatch.dest == Packet.dest) && (PacketMatch.seq == Packet.seq)){
-                        dbg(FLOODING_CHANNEL,"Packet src %d vs PacketMatch src %d\n", Packet.src,PacketMatch.src);
-                        dbg(FLOODING_CHANNEL,"Packet destination %d vs PacketMatch dest %d\n", Packet.dest,PacketMatch.dest);
-                        dbg(FLOODING_CHANNEL,"Packet seq %d vs PacketMatch seq %d\n", Packet.seq,PacketMatch.seq);
+                        //dbg(FLOODING_CHANNEL,"Packet src %d vs PacketMatch src %d\n", Packet.src,PacketMatch.src);
+                        //dbg(FLOODING_CHANNEL,"Packet destination %d vs PacketMatch dest %d\n", Packet.dest,PacketMatch.dest);
+                        //dbg(FLOODING_CHANNEL,"Packet seq %d vs PacketMatch seq %d\n", Packet.seq,PacketMatch.seq);
                         //call SeenPackList.remove(i);
                         return TRUE; //packet is found in list and has already been seen by node.
 
