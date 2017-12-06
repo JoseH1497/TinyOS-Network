@@ -1310,7 +1310,7 @@ implementation{
             tcpPackage.srcPort = openPort;
             memcpy(tcpPackage.payload, payload, sizeof(payload));
 	        memcpy(nodePorts[openPort].username, payload, sizeof(payload));
-            
+             memcpy(nodePorts[openPort].recievedData, payload, sizeof(payload));
 	        
             tcpPackage.seqNum = (uint16_t) ((call Random.rand16())%256);// get random starting sequence number for connection
             tcpPackage.flag = SYN_CLIENT;
