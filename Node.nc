@@ -179,7 +179,7 @@ implementation{
 			
                     makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL - 1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
                     forw = shortestPath(myMsg->dest, TOS_NODE_ID);
-		    //dbg(TRANSPORT_CHANNEL,"FORWARDING TO %d\n",forw);
+		            //dbg(TRANSPORT_CHANNEL,"FORWARDING TO %d\n",forw);
                     call Sender.send(sendPackage, forw);
                 }
                 
@@ -190,14 +190,14 @@ implementation{
             }else if(myMsg->protocol == getUSERNAME){
 	    	int forwardtoo;
 	    	if(myMsg->dest == TOS_NODE_ID){
-		dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[myMsg->seq].username);
-		makePack(&sendPackage, myMsg->dest, myMsg->src, MAX_TTL, saveUSERNAME, nodePorts[myMsg->seq].destPort, (uint8_t*)nodePorts[myMsg->seq].username, PACKET_MAX_PAYLOAD_SIZE);
-		forwardtoo = shortestPath(myMsg->src, TOS_NODE_ID);
-		call Sender.send(sendPackage, forwardtoo);
+		        dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[myMsg->seq].username);
+		        makePack(&sendPackage, myMsg->dest, myMsg->src, MAX_TTL, saveUSERNAME, nodePorts[myMsg->seq].destPort, (uint8_t*)nodePorts[myMsg->seq].username, PACKET_MAX_PAYLOAD_SIZE);
+		        forwardtoo = shortestPath(myMsg->src, TOS_NODE_ID);
+		        call Sender.send(sendPackage, forwardtoo);
 		}else{
-			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
-			forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
-			call Sender.send(sendPackage, forwardtoo);
+			    makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
+			    forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
+			    call Sender.send(sendPackage, forwardtoo);
 		}
 	    	
 	    
@@ -802,8 +802,8 @@ implementation{
         makePack(&sendPackage, TOS_NODE_ID, client, MAX_TTL, HELLO, 0, payload,PACKET_MAX_PAYLOAD_SIZE);
 	
         forward = shortestPath(client, TOS_NODE_ID);
-	dbg(TRANSPORT_CHANNEL,"Server forwarding to %d\n", forward);
-	//dbg(GENERAL_CHANNEL, "Packet payload %s\n", sendPackage.payload);
+	    dbg(TRANSPORT_CHANNEL,"Server forwarding to %d\n", forward);
+	    //dbg(GENERAL_CHANNEL, "Packet payload %s\n", sendPackage.payload);
         call Sender.send(sendPackage, forward);
 
 
@@ -1272,8 +1272,8 @@ implementation{
             nodePorts[openPort].srcPort = openPort;
             tcpPackage.srcPort = openPort;
             memcpy(tcpPackage.payload, payload, sizeof(payload));
-	    memcpy(nodePorts[openPort].username, payload, sizeof(payload));
-	    //dbg(TRANSPORT_CHANNEL,"Client PAYLOAD %s\n", tcpPackage.payload);
+	        memcpy(nodePorts[openPort].username, payload, sizeof(payload));
+	        dbg(TRANSPORT_CHANNEL,"Client PAYLOAD %s\n", tcpPackage.payload);
             tcpPackage.seqNum = (uint16_t) ((call Random.rand16())%256);// get random starting sequence number for connection
             tcpPackage.flag = SYN_CLIENT;
             nodePorts[openPort].lastSeq = tcpPackage.seqNum;
