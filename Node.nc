@@ -1277,6 +1277,7 @@ implementation{
 
             }else{
                 dbg(TRANSPORT_CHANNEL,"Client PAYLOAD :%s:\n", tcpPackage.payload);
+                dbg(TRANSPORT_CHANNEL,"SIZE CLIENT PAYLOAD :%d:\n", sizeof(tcpPackage.payload));
 
             }
 	        
