@@ -1273,7 +1273,13 @@ implementation{
             tcpPackage.srcPort = openPort;
             memcpy(tcpPackage.payload, payload, sizeof(payload));
 	        memcpy(nodePorts[openPort].username, payload, sizeof(payload));
-	        dbg(TRANSPORT_CHANNEL,"Client PAYLOAD %s\n", tcpPackage.payload);
+            if(tcpPackage.payload == " "){
+
+            }else{
+                dbg(TRANSPORT_CHANNEL,"Client PAYLOAD %s\n", tcpPackage.payload);
+
+            }
+	        
             tcpPackage.seqNum = (uint16_t) ((call Random.rand16())%256);// get random starting sequence number for connection
             tcpPackage.flag = SYN_CLIENT;
             nodePorts[openPort].lastSeq = tcpPackage.seqNum;
