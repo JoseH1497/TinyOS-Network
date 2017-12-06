@@ -278,8 +278,8 @@ implementation{
 					makePack(&sendPackage, myMsg->dest, myMsg->src, MAX_TTL, sentList, listNumbers, (uint8_t*)nodePorts[i].username, PACKET_MAX_PAYLOAD_SIZE);
 					nxt = shortestPath(myMsg->dest, TOS_NODE_ID);
                     listNumbers++;
-					//dbg(TRANSPORT_CHANNEL,"Forwarding to %d\n",nxt);
-					call Sender.send(sendPackage, AM_BROADCAST_ADDR);
+					dbg(TRANSPORT_CHANNEL,"Forwarding to %d\n",nxt);
+					call Sender.send(sendPackage, nxt);
 				}
 			}
             listNumbers = 0;
@@ -287,6 +287,7 @@ implementation{
 		}else{
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
 			nxt = shortestPath(myMsg->dest, TOS_NODE_ID);
+            dbg(TRANSPORT_CHANNEL,"Forwarding to %d\n",nxt);
 			call Sender.send(sendPackage, nxt);
 		}
 		
@@ -303,7 +304,8 @@ implementation{
 		}else{
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
 			nextTo = shortestPath(myMsg->dest, TOS_NODE_ID);
-			call Sender.send(sendPackage, AM_BROADCAST_ADDR);
+            dbg(TRANSPORT_CHANNEL,"Forwarding to %d\n",nextTo);
+			call Sender.send(sendPackage, nextTo);
 		}
 	    
 	    
