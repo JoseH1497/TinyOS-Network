@@ -272,7 +272,7 @@ implementation{
 	    	int nxt, i;
             int listNumbers = 0;
 	    	if(myMsg->dest == TOS_NODE_ID){
-                if(checkPacket(sendPackage)){
+                if(checkPacket(myMsg)){
 
                 }else{
                     dbg(TRANSPORT_CHANNEL,"Client %d is requesting list of current connected users!\n",myMsg->src);
@@ -285,7 +285,8 @@ implementation{
 					    call Sender.send(sendPackage, AM_BROADCAST_ADDR);
 				}
 			}
-            listNumbers = 0;}
+            listNumbers = 0;
+            }
 
 			
 	    
@@ -303,7 +304,7 @@ implementation{
 	    	int nextTo;
 		    dbg(TRANSPORT_CHANNEL," ");
 		if(myMsg->dest == TOS_NODE_ID){
-            if(checkPacket(sendPackage)){
+            if(checkPacket(myMsg)){
 
             }else{
                 printf("%d: %s\n ",myMsg->seq, myMsg->payload);
