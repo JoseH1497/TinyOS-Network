@@ -263,6 +263,7 @@ implementation{
 			dbg(TRANSPORT_CHANNEL,"-----------WHISPER MESSAGED meant for someone else------\n");
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
 			forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
+            dbg(TRANSPORT_CHANNEL,"Forwarding to %d\n",forwardtoo);
 			call Sender.send(sendPackage, AM_BROADCAST_ADDR);
 		}
 	    
@@ -481,9 +482,9 @@ implementation{
                             newTCPPackage.seqNum = (uint16_t) ((call Random.rand16())%256);
                             nodePorts[freePort].lastSeq = newTCPPackage.seqNum;
                             nodePorts[freePort].nextSeq = newTCPPackage.ACK;
-			    memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
-			    memcpy(nodePorts[freePort].username, tcpPack->payload, sizeof(tcpPack->payload));
-			    //dbg(TRANSPORT_CHANNEL,"payloadSERVER %s\n",newTCPPackage.payload);
+			                memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
+			                memcpy(nodePorts[freePort].username, tcpPack->payload, sizeof(tcpPack->payload));
+			                //dbg(TRANSPORT_CHANNEL,"payloadSERVER %s\n",newTCPPackage.payload);
                             //dbg(TRANSPORT_CHANNEL,"Server recieved SYN from client and is now sending SYN back to client\n");
                             //dbg(TRANSPORT_CHANNEL,"Server expects sequence number %d from Client %d on port %d\n", newTCPPackage.ACK, myMsg->src, freePort);
                             makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
@@ -507,8 +508,8 @@ implementation{
                                 newTCPPackage.destPort = tcpPack->srcPort;
                                 newTCPPackage.srcPort = tcpPack->destPort;
                                 newTCPPackage.ACK = nodePorts[tcpPack->destPort].lastSeq + 1;
-				memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
-				//dbg(TRANSPORT_CHANNEL,"payloadSERVER %s\n",newTCPPackage.payload);
+				                memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
+				                //dbg(TRANSPORT_CHANNEL,"payloadSERVER %s\n",newTCPPackage.payload);
                                 newTCPPackage.seqNum = nodePorts[tcpPack->destPort].lastSeq + 1;
                                 nodePorts[tcpPack->destPort].lastSeq = newTCPPackage.seqNum; //update sequence number
                                 newTCPPackage.flag = SYN;
@@ -533,32 +534,32 @@ implementation{
                             dbg(TRANSPORT_CHANNEL,"Server:%d Port: %d\n", TOS_NODE_ID, tcpPack->destPort);
 			    
                             if(tcpPack->payload != "TestClient" || tcpPack->payload != "closeClient"){
-			    	nodePorts[tcpPack->destPort].destAddr = myMsg->src;
+			    	            nodePorts[tcpPack->destPort].destAddr = myMsg->src;
                             	nodePorts[tcpPack->destPort].destPort =  tcpPack->srcPort;
-				nodePorts[tcpPack->destPort].srcPort = tcpPack->destPort;
+				                nodePorts[tcpPack->destPort].srcPort = tcpPack->destPort;
                             	nodePorts[tcpPack->destPort].state = ESTABLISHED;
-				makePack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, getUSERNAME, tcpPack->srcPort, &myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
+				                makePack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, getUSERNAME, tcpPack->srcPort, &myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
                                 //dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[tcpPack->destPort].username);
-				forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
+				                forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
                                 call Sender.send(sendPackage, forwardPackage);
 				
                             }else{
 			     
-			     nodePorts[tcpPack->destPort].destAddr = myMsg->src;
-                            nodePorts[tcpPack->destPort].destPort =  tcpPack->srcPort;
-                            nodePorts[tcpPack->destPort].state = ESTABLISHED;
-			    memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
-                            nodePorts[tcpPack->destPort].lastSeq = nodePorts[tcpPack->destPort].lastSeq +1;//keeps track of servers sequencenumber
-                            nodePorts[tcpPack->destPort].nextSeq = tcpPack->ACK;//keeps track of expected sequence number from client
-                            nodePorts[tcpPack->destPort].open = FALSE;//not open anymore
-                            dbg(TRANSPORT_CHANNEL,"-------SERVER CAN NOW ACCEPT BYTE STREAM DATA From Client %d on Server port %d---------\n",myMsg->src,tcpPack->destPort);
-                            bufferSize = getBufferSpaceAvail(nodePorts, tcpPack->destPort);
-                            dbg(TRANSPORT_CHANNEL,"Server has %d Bytes of available BUFFER SPACE for data\n",bufferSize);
-                            newTCPPackage.srcPort = tcpPack->destPort;
-                            newTCPPackage.destPort = tcpPack->srcPort;
-                            newTCPPackage.AdWindow = bufferSize - 1;
-                            newTCPPackage.flag = sendServerData; // flag to tell client to start sending data
-                            makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
+			                    nodePorts[tcpPack->destPort].destAddr = myMsg->src;
+                                nodePorts[tcpPack->destPort].destPort =  tcpPack->srcPort;
+                                nodePorts[tcpPack->destPort].state = ESTABLISHED;
+			                    memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
+                                nodePorts[tcpPack->destPort].lastSeq = nodePorts[tcpPack->destPort].lastSeq +1;//keeps track of servers sequencenumber
+                                nodePorts[tcpPack->destPort].nextSeq = tcpPack->ACK;//keeps track of expected sequence number from client
+                                nodePorts[tcpPack->destPort].open = FALSE;//not open anymore
+                                dbg(TRANSPORT_CHANNEL,"-------SERVER CAN NOW ACCEPT BYTE STREAM DATA From Client %d on Server port %d---------\n",myMsg->src,tcpPack->destPort);
+                                bufferSize = getBufferSpaceAvail(nodePorts, tcpPack->destPort);
+                                dbg(TRANSPORT_CHANNEL,"Server has %d Bytes of available BUFFER SPACE for data\n",bufferSize);
+                                newTCPPackage.srcPort = tcpPack->destPort;
+                                newTCPPackage.destPort = tcpPack->srcPort;
+                                newTCPPackage.AdWindow = bufferSize - 1;
+                                newTCPPackage.flag = sendServerData; // flag to tell client to start sending data
+                                makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
                                 forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
                                 call Sender.send(sendPackage, forwardPackage);
 			     
@@ -576,7 +577,7 @@ implementation{
                                 dbg(TRANSPORT_CHANNEL,"Byte Advertised Window for server has enough space to handle the rest of remaining bytes of client payload on port %d\n", tcpPack->srcPort);
                                 newTCPPackage.srcPort = tcpPack->destPort;
                                 newTCPPackage.destPort = tcpPack->srcPort;
-				memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
+				                memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
                                 newTCPPackage.doneSending = 1; //tell server we are finishing sending our message_t
                                 newTCPPackage.flag = clientSentData;
                                 makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
@@ -592,7 +593,7 @@ implementation{
                                 newTCPPackage.destPort = tcpPack->srcPort;
                                 newTCPPackage.doneSending = 0; //tell server we are not finish sending our message_t
                                 newTCPPackage.flag = clientSentData;
-				memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
+				                memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
                                 newTCPPackage.seqNum = tcpPack->AdWindow;
                                 makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
                                 forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
@@ -621,7 +622,7 @@ implementation{
                                 newTCPPackage.srcPort = tcpPack->destPort;
                                 newTCPPackage.destPort = tcpPack->srcPort;
                                 newTCPPackage.flag = sendServerData;
-				memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
+				                memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
                                 makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
                                 nextSpot = shortestPath(myMsg->src,TOS_NODE_ID);
                                 call Sender.send(sendPackage, nextSpot);
@@ -884,7 +885,7 @@ implementation{
 				destination =nodePorts[i].destAddr;
 				dbg(TRANSPORT_CHANNEL,"Sending data TO CLIENT %d:\n", destination);
 				makePack(&sendPackage, TOS_NODE_ID,2, MAX_TTL, WHISPER, msgSize2, (uint8_t*) data, msgSize2);
-				forwardto = shortestPath(2, TOS_NODE_ID);
+				forwardto = shortestPath(destination, TOS_NODE_ID);
 				dbg(TRANSPORT_CHANNEL,"Forwarding to %d \n", forwardto);
 				call Sender.send(sendPackage, AM_BROADCAST_ADDR);
 				break;
@@ -1296,7 +1297,7 @@ implementation{
             nodePorts[i].destAddr = 0; //initially
             nodePorts[i].portNumber = i;
             nodePorts[i].state = AVAILABLE;
-	    nodePorts[i].hasClient = FALSE;
+	        nodePorts[i].hasClient = FALSE;
         }
         for(i = 0; i < 256; i++){
             for(j = 0; j < 128; j++){
