@@ -172,7 +172,7 @@ def main():
     s.runTime(40);
     #s.testServer(1);
     #s.runTime(40);
-    s.testClient(2, 1, " ");
+    s.testClient(2, 1, "TestClient");
     s.runTime(40);
     #s.closeClient(2,1, "closeClient");
     #s.runTime(60);

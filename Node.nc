@@ -606,7 +606,7 @@ implementation{
                             int forwardPackage;
                             dbg(TRANSPORT_CHANNEL,"Server has %d bytes of buffer space\n",tcpPack->AdWindow);
                             if(tcpPack->AdWindow > nodePorts[tcpPack->destPort].sizeofPayload){
-                                dbg(TRANSPORT_CHANNEL,"Byte Advertised Window for server has enough space to handle the rest of remaining bytes of client payload on port %d\n", tcpPack->srcPort);
+                                dbg(TRANSPORT_CHANNEL,"Byte Advertised Window for server has enough space to handle all %d bytes of client payload on port %d\n", nodePorts[tcpPack->destPort].sizeofPayload,tcpPack->srcPort);
                                 newTCPPackage.srcPort = tcpPack->destPort;
                                 newTCPPackage.destPort = tcpPack->srcPort;
 				                memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
@@ -616,20 +616,21 @@ implementation{
                                 forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
                                 call Sender.send(sendPackage, forwardPackage);
 
-                            }else if(tcpPack->AdWindow != 0){
-                                int nextData;
-                                nextData = tcpPack->AdWindow;
-                                nodePorts[tcpPack->destPort].sizeofPayload = nodePorts[tcpPack->destPort].sizeofPayload - tcpPack->AdWindow;
-                                dbg(TRANSPORT_CHANNEL, "Sending next %d bytes of data to port %d and server %d\n", nextData, tcpPack->srcPort, myMsg->src);
-                                newTCPPackage.srcPort = tcpPack->destPort;
-                                newTCPPackage.destPort = tcpPack->srcPort;
-                                newTCPPackage.doneSending = 0; //tell server we are not finish sending our message_t
-                                newTCPPackage.flag = clientSentData;
-				                memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
-                                newTCPPackage.seqNum = tcpPack->AdWindow;
-                                makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
-                                forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
-                                call Sender.send(sendPackage, forwardPackage);
+                            }else if(tcpPack->AdWindow < nodePorts[tcpPack->destPort].sizeofPayload){
+                                dbg(TRANSPORT_CHANNEL, "NO BUFFER SPACE AVAILABLE ON PORT%d\n", tcpPack->srcPort);
+                                //int nextData;
+                                //nextData = tcpPack->AdWindow;
+                                //nodePorts[tcpPack->destPort].sizeofPayload = nodePorts[tcpPack->destPort].sizeofPayload - tcpPack->AdWindow;
+                                //dbg(TRANSPORT_CHANNEL, "Sending next %d bytes of data to port %d and server %d\n", nextData, tcpPack->srcPort, myMsg->src);
+                                //newTCPPackage.srcPort = tcpPack->destPort;
+                                //newTCPPackage.destPort = tcpPack->srcPort;
+                                //newTCPPackage.doneSending = 0; //tell server we are not finish sending our message_t
+                                //newTCPPackage.flag = clientSentData;
+				                //memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
+                                //newTCPPackage.seqNum = tcpPack->AdWindow;
+                                //makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
+                                //forwardPackage = shortestPath(myMsg->src,TOS_NODE_ID);
+                                //call Sender.send(sendPackage, forwardPackage);
                                 
 
                             }else{
@@ -642,9 +643,14 @@ implementation{
 
                     }else if(tcpPack->flag == clientSentData){
                             int nextSpot;
+                            int i;
                             if(tcpPack->doneSending == 1){
                                 dbg(TRANSPORT_CHANNEL, "-------------Recieved all data from client %d with client PORT %d--------------\n", myMsg->src, tcpPack->srcPort);
                                 dbg(TRANSPORT_CHANNEL, "FREE BUFFER SPACE ON PORT %d\n", tcpPack->destPort);
+                                for(i= 0; i < BUFFERSIZE; i++){
+
+                                    nodePorts[tcpPack->destPort].recievedData[i] = "-";
+                                }
 
 
 

@@ -5,7 +5,7 @@
 
 enum{
 
-    BUFFERSIZE = 256,
+    BUFFERSIZE = 128,
     SERVERPORT = 255,
     LISTENING = 700,
     LISTENING_SERVER = 219,
@@ -108,7 +108,7 @@ typedef struct Port{
         int srcPort;
         bool hasClient;
         uint16_t state;
-        char recievedData[128];
+        char recievedData[BUFFERSIZE];
         char sentData[128];
         uint16_t sizeofPayload;
         uint8_t username[PACKET_MAX_PAYLOAD_SIZE];
