@@ -612,7 +612,7 @@ implementation{
 				                memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
                                 newTCPPackage.doneSending = 1; //tell server we are finishing sending our message_t
                                 newTCPPackage.flag = clientSentData;
-                                newTCPPackage.seq = nodePorts[tcpPack->destPort].sizeofPayload +1;
+                                newTCPPackage.seqNum = nodePorts[tcpPack->destPort].sizeofPayload +1;
                                 nodePorts[tcpPack->destPort].sizeofPayload = nodePorts[tcpPack->destPort].sizeofPayload - nodePorts[tcpPack->destPort].sizeofPayload;
                                 
                                 makeTCPPack(&sendPackage, TOS_NODE_ID, myMsg->src, MAX_TTL, PROTOCOL_TCP, myMsg->seq + 1, &newTCPPackage, sizeof(newTCPPackage));
