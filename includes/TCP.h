@@ -5,7 +5,7 @@
 
 enum{
 
-    BUFFERSIZE = 128,
+    BUFFERSIZE = 16,
     SERVERPORT = 255,
     LISTENING = 700,
     LISTENING_SERVER = 219,
@@ -57,7 +57,7 @@ typedef nx_struct TCP{
         nx_uint16_t data[BUFFERSIZE];
         nx_uint8_t doneSending;
         nx_uint8_t payload[PACKET_MAX_PAYLOAD_SIZE];
-        
+
         
 
 }TCP;
