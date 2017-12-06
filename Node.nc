@@ -25,7 +25,7 @@ typedef nx_struct netMap{
 
 int seqNum = 1, updateNum = 1;
 int numOfVertices = 20;
-int listNum = 0;
+
 module Node{
     uses interface Boot;
     
@@ -188,18 +188,18 @@ implementation{
 
 
 
-            }else if(myMsg->protocol == getUSERNAME){
+        }else if(myMsg->protocol == getUSERNAME){
 	    	int forwardtoo;
 	    	if(myMsg->dest == TOS_NODE_ID){
 		        dbg(TRANSPORT_CHANNEL, "Hello %s\n", nodePorts[myMsg->seq].username);
 		        makePack(&sendPackage, myMsg->dest, myMsg->src, MAX_TTL, saveUSERNAME, nodePorts[myMsg->seq].destPort, (uint8_t*)nodePorts[myMsg->seq].username, PACKET_MAX_PAYLOAD_SIZE);
 		        forwardtoo = shortestPath(myMsg->src, TOS_NODE_ID);
 		        call Sender.send(sendPackage, forwardtoo);
-		}else{
+		    }else{
 			    makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
 			    forwardtoo = shortestPath(myMsg->dest, TOS_NODE_ID);
 			    call Sender.send(sendPackage, forwardtoo);
-		}
+		    }
 	    	
 	    
 	    }else if(myMsg->protocol == saveUSERNAME){
@@ -220,7 +220,7 @@ implementation{
 	    	 
 	    }else if(myMsg->protocol == SERVER_BROADCAST){
 	    	int forwardtoo;
-		int i;
+		    int i;
 	    	if(myMsg->dest == TOS_NODE_ID){
 			dbg(TRANSPORT_CHANNEL,"Broadcast MESSAGED RECIEVED FROM CLIENT %d PAYLOAD: %s\n",myMsg->src, myMsg->payload);
 			for(i = 0; i < 256; i++){
@@ -270,16 +270,19 @@ implementation{
 	    
 	    }else if(myMsg->protocol == requestList){
 	    	int nxt, i;
+            int listNumbers = 0;
 	    	if(myMsg->dest == TOS_NODE_ID){
 			dbg(TRANSPORT_CHANNEL,"Client %d is requesting list of current connected users!\n",myMsg->src);
 			for(i = 0; i < 256;  i++){
 				if(nodePorts[i].hasClient == TRUE){
-					makePack(&sendPackage, myMsg->dest, myMsg->src, MAX_TTL, sentList, nodePorts[i].destPort, (uint8_t*)nodePorts[i].username, PACKET_MAX_PAYLOAD_SIZE);
+					makePack(&sendPackage, myMsg->dest, myMsg->src, MAX_TTL, sentList, listNumbers, (uint8_t*)nodePorts[i].username, PACKET_MAX_PAYLOAD_SIZE);
 					nxt = shortestPath(myMsg->dest, TOS_NODE_ID);
+                    listNumbers++;
 					//dbg(TRANSPORT_CHANNEL,"Forwarding to %d\n",nxt);
 					call Sender.send(sendPackage, AM_BROADCAST_ADDR);
 				}
 			}
+            listNumbers = 0;
 	    
 		}else{
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
@@ -294,8 +297,8 @@ implementation{
 	    	int nextTo;
 		    dbg(TRANSPORT_CHANNEL," ");
 		if(myMsg->dest == TOS_NODE_ID){
-			printf("%d: %s\n ",listNum, myMsg->payload);
-			listNum++;
+			printf("%d: %s\n ",myMsg->seq, myMsg->payload);
+			
 		
 		}else{
 			makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL -1, myMsg->protocol, myMsg->seq, myMsg->payload, PACKET_MAX_PAYLOAD_SIZE);
