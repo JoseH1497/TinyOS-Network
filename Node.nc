@@ -532,7 +532,7 @@ implementation{
                             dbg(TRANSPORT_CHANNEL,"-------CONNECTION ESTABLISHED, Three-WAY Handshake Complete---------\n");
                             dbg(TRANSPORT_CHANNEL,"Client:%d Port: %d\n", myMsg->src, tcpPack->srcPort);
                             dbg(TRANSPORT_CHANNEL,"Server:%d Port: %d\n", TOS_NODE_ID, tcpPack->destPort);
-                            dbg(TRANSPORT_CHANNEL,"PAYLOAD %:s:\n", tcpPack->payload);
+                            dbg(TRANSPORT_CHANNEL,"PAYLOAD :%s:\n", tcpPack->payload);
                             if(tcpPack->payload != "TestClient" || tcpPack->payload != "closeClient" || tcpPack->payload != ' '){
 			    	            nodePorts[tcpPack->destPort].destAddr = myMsg->src;
                             	nodePorts[tcpPack->destPort].destPort =  tcpPack->srcPort;
