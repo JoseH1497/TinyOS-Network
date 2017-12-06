@@ -82,19 +82,19 @@ implementation{
                 signal CommandHandler.clientClose(buff[0], &buff[1]);
                 break;
             case CMD_HELLO_SERVER:
-                dbg(COMMAND_CHANNEL, "Command: Hello\n");
+                dbg(COMMAND_CHANNEL, "\n\nCommand: Hello\n");
                 signal CommandHandler.helloServer(buff[0], &buff[1]);
                 break;
             case CMD_WHISPER:
-               dbg(COMMAND_CHANNEL, "Command: Whisper\n");
+               dbg(COMMAND_CHANNEL, "\n\nCommand: Whisper\n");
                signal CommandHandler.whisperMessage(&buff[0], &buff[1]);
                break;
             case CMD_BROADCAST:
-               dbg(COMMAND_CHANNEL, "Command: Broadcast\n");
+               dbg(COMMAND_CHANNEL, "\n\nCommand: Broadcast\n");
                signal CommandHandler.broadCastMessage(buff[0], &buff[1]);
                break;
             case CMD_PRINT_USERS:
-               dbg(COMMAND_CHANNEL, "Command: Get list of Users\n");
+               dbg(COMMAND_CHANNEL, "\n\nCommand: Get list of Users\n");
                signal CommandHandler.listUsers(buff[0], &buff[1]);
                break;
             default:
