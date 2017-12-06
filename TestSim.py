@@ -189,8 +189,8 @@ def main():
     s.whisper(1,"atrebic ", "HELLO!\r\n");
     #s.whisper(1,3, "HI!\r\n");
     s.runTime(80);
-    s.listusr(2, 1, "listusr\r\n");
-    s.runTime(80);
+    #s.listusr(2, 1, "listusr\r\n");
+    #s.runTime(80);
     #s.listusr(3,1, "listusr\r\n");
     #s.runTime(80);
     #s.testServer(7);
