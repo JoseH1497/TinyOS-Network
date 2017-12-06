@@ -482,6 +482,7 @@ implementation{
                             newTCPPackage.seqNum = (uint16_t) ((call Random.rand16())%256);
                             nodePorts[freePort].lastSeq = newTCPPackage.seqNum;
                             nodePorts[freePort].nextSeq = newTCPPackage.ACK;
+                            nodePorts[freePort].state = SYN_RCVD;
 			                memcpy(newTCPPackage.payload, tcpPack->payload, sizeof(tcpPack->payload));
 			                memcpy(nodePorts[freePort].username, tcpPack->payload, sizeof(tcpPack->payload));
 			                //dbg(TRANSPORT_CHANNEL,"payloadSERVER %s\n",newTCPPackage.payload);
@@ -533,7 +534,7 @@ implementation{
                             dbg(TRANSPORT_CHANNEL,"Client:%d Port: %d\n", myMsg->src, tcpPack->srcPort);
                             dbg(TRANSPORT_CHANNEL,"Server:%d Port: %d\n", TOS_NODE_ID, tcpPack->destPort);
                             dbg(TRANSPORT_CHANNEL,"PAYLOAD :%s:\n", tcpPack->payload);
-                            if(tcpPack->payload != "TestClient" || tcpPack->payload != "closeClient" || tcpPack->payload != ' '){
+                            if(tcpPack->payload != "TestClient" || tcpPack->payload != "closeClient" || nodePorts[tcpPack->destPort].state != SYN_RCVD){
 			    	            nodePorts[tcpPack->destPort].destAddr = myMsg->src;
                             	nodePorts[tcpPack->destPort].destPort =  tcpPack->srcPort;
 				                nodePorts[tcpPack->destPort].srcPort = tcpPack->destPort;
