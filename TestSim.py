@@ -182,8 +182,8 @@ def main():
     s.runTime(80);
     s.helloServer(1, 4, "kalex\r\n");
     s.runTime(80);
-    s.helloServer(1, 5, "thesla\r\n");
-    s.runTime(80);
+    #s.helloServer(1, 5, "thesla\r\n");
+    #s.runTime(80);
     s.broadCast(3, 1, "Hello World!\r\n");
     s.runTime(80);
     s.whisper(1,"atrebic ", "HELLO!\r\n");
@@ -192,7 +192,7 @@ def main():
     s.listusr(2, 1, "listusr\r\n");
     s.runTime(80);
     #s.listusr(3,1, "listusr\r\n");
-    s.runTime(80);
+    #s.runTime(80);
     #s.testServer(7);
     #s.runTime(20);
     #s.testServer(19);
