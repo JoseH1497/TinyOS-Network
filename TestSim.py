@@ -188,8 +188,8 @@ def main():
     s.runTime(80);
     s.whisper(1,"atrebic ", "HELLO!\r\n");
     s.runTime(80);
-    s.whisper(1,"kalex ", "HI!\r\n");
-    s.runTime(80);
+    #s.whisper(1,"kalex ", "HI!\r\n");
+    #s.runTime(80);
     s.listusr(2, 1, "listusr\r\n");
     s.runTime(80);
     #s.listusr(3,1, "listusr\r\n");
