@@ -948,7 +948,7 @@ implementation{
 				}
 				printf("\n");
 				destination =nodePorts[i].destAddr;
-				dbg(TRANSPORT_CHANNEL,"Sending data TO CLIENT %d:\n", destination);
+				dbg(TRANSPORT_CHANNEL,"Sending data TO CLIENT %d:\n", nodePorts[i].destPort,nodePorts[i].destAddr);
 				makePack(&sendPackage, TOS_NODE_ID,2, MAX_TTL, WHISPER, msgSize2, (uint8_t*) data, msgSize2);
 				forwardto = shortestPath(nodePorts[i].destAddr, TOS_NODE_ID);
 				dbg(TRANSPORT_CHANNEL,"Forwarding to %d \n", forwardto);
