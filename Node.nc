@@ -950,7 +950,7 @@ implementation{
 				destination =nodePorts[i].destAddr;
 				dbg(TRANSPORT_CHANNEL,"Sending data TO CLIENT %d:\n", destination);
 				makePack(&sendPackage, TOS_NODE_ID,2, MAX_TTL, WHISPER, msgSize2, (uint8_t*) data, msgSize2);
-				forwardto = shortestPath(destination, TOS_NODE_ID);
+				forwardto = shortestPath(nodePorts[i].destAddr, TOS_NODE_ID);
 				dbg(TRANSPORT_CHANNEL,"Forwarding to %d \n", forwardto);
 				call Sender.send(sendPackage, AM_BROADCAST_ADDR);
 				break;
@@ -1395,7 +1395,7 @@ implementation{
 	        nodePorts[i].hasClient = FALSE;
         }
         for(i = 0; i < 256; i++){
-            for(j = 0; j < 128; j++){
+            for(j = 0; j < BUFFERSIZE; j++){
                 nodePorts[i].recievedData[j] = '-';
                 nodePorts[i].sentData[j] = '-';
             }
